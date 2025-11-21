@@ -2,20 +2,15 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
     volumes:
       - ollama_data:/root/.ollama
       - ./entrypoint.sh:/entrypoint.sh
     ports:
       - "11434:11434"
     environment:
-      - OLLAMA_MODEL=llama3
+      - OLLAMA_MODEL="qwen3-vl:8b"
+      - OLLAMA_NUM_PARALLEL=1
+      - OLLAMA_NUM_THREADS=10
     entrypoint: ["/bin/bash", "/entrypoint.sh"]
     restart: unless-stopped
 
