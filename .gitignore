@@ -1,0 +1,22 @@
+# Python Environment
+.venv/
+.mypy_cache/
+.pytest_cache/
+
+# Python Outputs
+__pycache__/
+*.pyc
+*.o
+*.so
+
+# Notebook Cache
+.ipynb_checkpoints/
+
+# Project
+output/
+data/
+!data/source_urls.json
+
+# Settings
+.vscode/
+.env
