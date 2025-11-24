@@ -1,34 +1,13 @@
 import os
-from pathlib import Path
 
-from dotenv import load_dotenv
+# LLM Models
+# MODEL_FAST = "gemini-2.5-flash"
+# MODEL_HIGH_QUALITY = "gemini-2.5-pro"
+MODEL_FAST = "gemini-2.5-flash-lite"
+MODEL_HIGH_QUALITY = "gemini-2.5-flash"
 
-# .envファイルを読み込む
-# .envファイルはプロジェクトのルートディレクトリに配置する
-load_dotenv()
-
-# APIキー
-GOOGLE_SEARCH_API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY")
-CUSTOM_SEARCH_ENGINE_ID = os.getenv("CUSTOM_SEARCH_ENGINE_ID")
-os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")
-
-# ディレクトリ設定
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
-OUTPUT_DIR = PROJECT_ROOT / "output"
-RAW_TEXT_DIR = DATA_DIR / "raw_text"
-RAW_HTML_DIR = DATA_DIR / "raw_html"
-PROC_GRAPH_DIR = DATA_DIR / "processed_graph"
-DATA_DIR.mkdir(exist_ok=True)
-OUTPUT_DIR.mkdir(exist_ok=True)
-
-# 確認用
-if __name__ == "__main__":
-    print(f"Project Root: {PROJECT_ROOT}")
-    print(f"Data Dir:     {DATA_DIR}")
-    # print(f"GOOGLE_API_KEY: {GOOGLE_API_KEY}")
-    print(f"CUSTOM_SEARCH_ENGINE_ID: {CUSTOM_SEARCH_ENGINE_ID}")
-
+# Search
+DEFAULT_SEARCH_K = 10
 
 # 対象自治体
 TARGET_CITIES = [
