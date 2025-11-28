@@ -11,14 +11,14 @@ class ResearchState(TypedDict):
     # 検索・収集フェーズ用
     search_queries: list[str]
     visited_urls: list[str]
-    collected_texts: Annotated[list[str], operator.add]  # 追記型
+    collected_texts: Annotated[list[str], operator.add]
 
     # 制御用
-    loop_count: int
+    search_loop_count: int
     is_sufficient: bool
     missing_info: str | None
 
     # 最終結果
-    final_output: dict | None  # AnalysisResultをdict化したもの
-    validation_error: str | None  # バリデーションエラーメッセージ
-    retry_count: int  # 再生成回数
+    analysis_result: dict | None
+    validation_error: str | None
+    generation_retry_count: int

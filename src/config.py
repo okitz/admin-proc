@@ -7,6 +7,10 @@ MODEL_HIGH_QUALITY = "gemini-2.5-flash"
 # Search
 DEFAULT_SEARCH_K = 10
 
+# Control Flow Limits
+MAX_SEARCH_LOOPS = 3
+MAX_GENERATION_RETRIES = 3
+
 # 対象自治体
 TARGET_CITIES = [
     {"id": "01100", "name": "札幌市", "prefecture": "北海道"},

@@ -1,9 +1,10 @@
 from typing import cast
 
+from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.runnables import Runnable, RunnableConfig
 from langgraph.graph import END, StateGraph
 
-from config import MODEL_FAST, MODEL_HIGH_QUALITY
+from config import DEFAULT_SEARCH_K, MAX_GENERATION_RETRIES, MAX_SEARCH_LOOPS, MODEL_FAST, MODEL_HIGH_QUALITY
 from schemas import AnalysisResult, EvaluationResult, UrlSelection
 from states import ResearchState
 from utils import get_llm, get_search_tool, load_personas, load_prompt
@@ -12,22 +13,20 @@ from validator import GraphValidator
 
 class ProcedureAnalyzer:
     def __init__(
-        self, model_name: str = MODEL_FAST, high_quality_model_name: str = MODEL_HIGH_QUALITY, use_google_search: bool = False
+        self,
+        model_name: str = MODEL_FAST,
+        high_quality_model_name: str = MODEL_HIGH_QUALITY,
+        max_search_loops: int = MAX_SEARCH_LOOPS,
+        max_generation_retries: int = MAX_GENERATION_RETRIES,
     ):
         """
-        コンストラクタで「道具（LLM, ツール）」と「グラフ構造」を確定させる
+        コンストラクタでモデル、グラフの定義
         """
-        # 1. コンポーネントの初期化
-        # Search/Crawl/Evaluate用
         self.llm_fast = get_llm(model_name=model_name)
-        # Generate用
         self.llm_high_quality = get_llm(model_name=high_quality_model_name)
+        self.max_search_loops = max_search_loops
+        self.max_generation_retries = max_generation_retries
 
-        # 検索ツール (utils.get_search_toolは内部で環境変数を読むが、引数で制御できるように拡張しても良い)
-        # ここでは既存のutilsの実装に合わせて呼び出す
-        self.search_tool_factory = get_search_tool  # 検索クエリごとに呼び出すためファクトリとして保持、あるいは都度呼び出し
-
-        # 2. グラフのビルドとコンパイル（1回だけ実行）
         self.app = self._build_workflow()
 
     def _build_workflow(self):
@@ -40,8 +39,6 @@ class ProcedureAnalyzer:
         workflow.add_node("evaluate", self._evaluate_node)
         workflow.add_node("generate", self._generate_node)
         workflow.add_node("validate", self._validate_node)
-
-        # エントリーポイント
         workflow.set_entry_point("search")
 
         # エッジ定義
@@ -59,47 +56,45 @@ class ProcedureAnalyzer:
 
         return workflow.compile()
 
-    # --- Conditional Logic ---
+    # 条件分岐ロジック
     def _check_sufficiency(self, state: ResearchState):
         if state["is_sufficient"]:
             return "generate"
-        elif state["loop_count"] > 3:  # 最大ループ回数
+        elif state["search_loop_count"] > self.max_search_loops:  # 最大ループ回数
             print("Max loop count reached. Proceeding to generation anyway.")
             return "generate"
         else:
-            return "search"  # 再検索へ戻る
+            return "search"  # 再検索へ
 
     def _check_validation(self, state: ResearchState):
-        if state.get("validation_error"):
-            if state.get("retry_count", 0) < 3:  # 最大リトライ回数
-                print("Validation failed. Retrying generation...")
-                return "generate"
-            else:
-                print("Max retry count reached. Outputting invalid result.")
-                return END
-        return END
+        if not state.get("validation_error"):
+            return END
+        elif state.get("generation_retry_count", 0) >= self.max_generation_retries:  # 最大リトライ回数
+            print("Max retry count reached. Outputting invalid result.")
+            return END
+        else:
+            print("Validation failed. Retrying generation...")
+            return "generate"
 
-    # --- Node Implementations ---
+    # ノード実装
     def _search_node(self, state: ResearchState):
         """検索を実行し、URL候補を挙げる"""
-        print(f"--- Search Node (Loop: {state['loop_count']}) ---")
+        print(f"--- Search Node (Loop: {state['search_loop_count']}) ---")
 
         results_text = []
 
         include_domains = None
         query = ""
-        if state["loop_count"] == 0:
+        if state["search_loop_count"] == 0:
             include_domains = ["app.oss.myna.go.jp"]
             query = f"{state['city_name']} {state['target_procedure']} 電子申請"
-        elif state["loop_count"] == 1:
+        elif state["search_loop_count"] == 1:
             query = f"{state['city_name']} {state['target_procedure']}"
         else:
             query = f"{state['city_name']} {state['target_procedure']} {state.get('missing_info', '')}"
 
-        # 検索ツールの取得 (都度パラメータを変える可能性があるためここで取得)
-        search_tool = get_search_tool(
-            k=10, include_domains=include_domains
-        )  # configのDEFAULT_SEARCH_Kを使うべきだが一旦ハードコードまたは引数化
+        # 検索ツールの取得
+        search_tool = get_search_tool(k=DEFAULT_SEARCH_K, include_domains=include_domains)
         print(f"Searching for: {query}")
         results = search_tool.invoke(query)
         if results:
@@ -112,15 +107,13 @@ class ProcedureAnalyzer:
         print("--- Select & Crawl Node ---")
         # self.llm_fast を使用
         prompt_tmpl = load_prompt("judge_url.md")
-
         last_search_result = state["collected_texts"][-1]
-
         prompt = prompt_tmpl.format(
             city_name=state["city_name"], target_procedure=state["target_procedure"], search_results=last_search_result
         )
-
         structured_llm = cast(Runnable[str, UrlSelection], self.llm_fast.with_structured_output(UrlSelection))
 
+        # URL選定
         try:
             selection = structured_llm.invoke(prompt)
             target_url = selection.url
@@ -128,15 +121,13 @@ class ProcedureAnalyzer:
             print(f"Selected URL: {target_url} (Reason: {reason})")
         except Exception as e:
             print(f"Error in URL selection: {e}")
-            return {"loop_count": state["loop_count"] + 1}
+            return {"search_loop_count": state["search_loop_count"] + 1}
 
         if not target_url or target_url in state["visited_urls"]:
             print("URL already visited or invalid. Skipping.")
-            return {"loop_count": state["loop_count"] + 1}
+            return {"search_loop_count": state["search_loop_count"] + 1}
 
         # Crawling
-        from langchain_community.document_loaders import WebBaseLoader
-
         try:
             loader = WebBaseLoader(target_url)
             docs = loader.load()
@@ -147,7 +138,11 @@ class ProcedureAnalyzer:
             page_content = "Error: Failed to crawl."
 
         formatted_text = f"<SOURCE url='{target_url}'>\n{page_content}\n</SOURCE>"
-        return {"collected_texts": [formatted_text], "visited_urls": [target_url], "loop_count": state["loop_count"] + 1}
+        return {
+            "collected_texts": [formatted_text],
+            "visited_urls": [target_url],
+            "search_loop_count": state["search_loop_count"] + 1,
+        }
 
     def _evaluate_node(self, state: ResearchState):
         """情報の充足度を判定する"""
@@ -201,12 +196,12 @@ class ProcedureAnalyzer:
         structured_llm = cast(Runnable[str, AnalysisResult], self.llm_high_quality.with_structured_output(AnalysisResult))
         result = structured_llm.invoke(formatted_prompt)
 
-        return {"final_output": result.model_dump(), "validation_error": None}
+        return {"analysis_result": result.model_dump(), "validation_error": None}
 
     def _validate_node(self, state: ResearchState):
         """生成されたグラフを検証する"""
         print("--- Validate Node ---")
-        result = state["final_output"]
+        result = state["analysis_result"]
         if not result:
             return {"validation_error": "No output generated."}
 
@@ -224,7 +219,7 @@ class ProcedureAnalyzer:
         if not is_valid:
             error_msg = "\n".join(errors)
             print(f"Validation Failed:\n{error_msg}")
-            return {"validation_error": error_msg, "retry_count": state.get("retry_count", 0) + 1}
+            return {"validation_error": error_msg, "generation_retry_count": state.get("generation_retry_count", 0) + 1}
 
         print("Validation Passed.")
         return {"validation_error": None}
@@ -237,11 +232,11 @@ class ProcedureAnalyzer:
             search_queries=[],
             visited_urls=[],
             collected_texts=[],
-            loop_count=0,
+            search_loop_count=0,
             is_sufficient=False,
             missing_info=None,
-            final_output=None,
+            analysis_result=None,
             validation_error=None,
-            retry_count=0,
+            generation_retry_count=0,
         )
         return self.app.invoke(initial_state, config=config)

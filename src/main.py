@@ -27,14 +27,14 @@ def run_analysis(city_id: str, procedure_name: str = "児童手当 認定請求"
     out_path = Path(output_dir)
     out_path.mkdir(parents=True, exist_ok=True)
 
-    # Analyzerの初期化 (ここでグラフがコンパイルされる)
+    # Analyzerの初期化
     analyzer = ProcedureAnalyzer()
 
     # 実行
     try:
         final_state = analyzer.run(city_name, procedure_name)
 
-        result = final_state.get("final_output")
+        result = final_state.get("analysis_result")
         if result:
             # ファイル保存
             filename = f"{city_id}_{procedure_name}.json"

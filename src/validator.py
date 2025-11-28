@@ -18,7 +18,7 @@ class GraphValidator:
         self.errors = []
         self.warnings = []
 
-        # NetworkXグラフの構築（位相幾何学的チェック用）
+        # NetworkXグラフの構築（トポロジーチェック用）
         self.G = nx.DiGraph()
         for n in self.nodes:
             self.G.add_node(n["id"], type=n["type"])
@@ -122,7 +122,6 @@ class GraphValidator:
     def _check_type_constraints(self):
         """エッジの型制約チェック（Schemaで定義したルール）"""
         # 許容される SourceType -> EdgeType -> TargetType の定義
-        # (簡略化のため主要なルールのみ記載)
         RULES = {
             # Physical Acquire & Transform
             "Physical_Possess": ("State", ["Physical_Artifact", "Raw_Material"]),
@@ -200,9 +199,8 @@ class GraphValidator:
                 self.warnings.append(f"Evidence Warning: Edge '{e['action']}' has no evidence text.")
 
 
-# --- 使用例 ---
 if __name__ == "__main__":
-    # ダミーデータ（前回の出力例）
+    # ダミーデータ
     data = {
         "nodes": [{"id": "d4", "type": "System", "label": "画面"}, {"id": "d9", "type": "State", "label": "完了"}],
         "edges": [
