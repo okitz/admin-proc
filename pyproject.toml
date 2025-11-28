@@ -24,3 +24,30 @@ dependencies = [
     "scipy>=1.15.3",
     "tavily-python>=0.7.13",
 ]
+
+[tool.pyright]
+typeCheckingMode = "basic"
+include = ["src"]
+exclude = ["**/__pycache__"]
+pythonVersion = "3.10"
+reportUnusedVariable = "none"
+
+[tool.ruff]
+src = ["src"]
+exclude = [
+    ".venv",
+    ".git",
+    "__pypackages__",
+    ".ruff_cache",
+]
+line-length = 128
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
