@@ -63,45 +63,7 @@
 - **エビデンステキスト:** `evidence_text` には、そのアクションの根拠となる具体的な一文を抜粋すること。同じ文言を無関係なエッジに使い回すことは禁止する。
 - **情報の根拠:** 入力テキストに明記されていない情報は原則出力しない。ただし、テキスト内に明記されていないが論理的に必要な手順（例: ポスト投函、ログイン後の入力）については、無理に引用せず "implicit" と記述すること。
 
-# 定義：Node Types (ノードの型)
-各ノードは必ず以下のいずれかに分類すること。
-
-- **State:** プロセスの始点、終点、待機状態。(例: `開始(自宅)`, `申請完了`, `認定通知`)
-- **System:** デジタルシステム。(例: `マイナポータル`, `自治体HP`)
-- **Raw_Material:** 未記入・未加工の物理素材。(例: `未記入申請書`, `封筒`, `切手`)
-- **Physical_Artifact:** 手が加わった物理的成果物。(例: `記入済申請書`, `保険証の写し`, `封入済封筒`, `本人確認書類(原本)`)
-- **Digital_Object:** デジタルデータ。(例: `申請書PDF`, `入力データ`, `撮影画像`)
-    - `電子署名` は `Digital_Object` とみなさず、アクション (`Digital_Auth` Edge) として扱うこと。
-
-# 定義：Edge Types (アクションの型と接続制約)
-各エッジは以下の定義に従い、許容される Source(S) -> Target(T) の型制約を守ること。
-
-## 物理的取得・変換 (Physical Acquire & Transform)
-- **Physical_Possess** (S:State -> T:Physical_Artifact/Raw_Material): 手続きを開始時点で既に所持しているもの。コスト0。
-- **Physical_Acquire_Resident** (S:State -> T:Physical_Artifact): 居住自治体の公的機関で書類を取得する。
-- **External_Acquire** (S:State -> T:Physical_Artifact): 遠隔地・別組織から書類を取得する。（例: 前住所地への郵送請求、職場の書類）
-- **Physical_Print_Store** (S:Digital_Object -> T:Raw_Material): コンビニ等へ移動し、PDFを「印刷」する。
-- **Physical_Get_Material** (S:State -> T:Raw_Material): 役所等へ移動し、未記入の用紙を入手する。
-- **Physical_Fill** (S:Raw_Material -> T:Physical_Artifact): ペンで紙に記入する、あるいは押印する。
-- **Physical_Copy_Store** (S:Physical_Artifact -> T:Physical_Artifact): コンビニ等へ移動し、原本の「コピー」をとる。
-- **Physical_Enclose** (S:Physical_Artifact -> T:Physical_Artifact): 書類を封筒に「封入」する。
-
-## 物理的提出 (Physical Submit)
-- **Physical_Submit_Window** (S:Physical_Artifact -> T:State): 役所窓口へ移動し、提出する。
-- **Physical_Submit_Mail** (S:Physical_Artifact -> T:State): ポストへ移動し、投函する。
-
-## デジタルアクション (Digital)
-- **Digital_Access** (S:State -> T:System): Webサイトやシステムにアクセスする。
-- **Digital_Download** (S:System -> T:Digital_Object): Webサイトから様式PDF等をダウンロードする。
-- **Digital_Auth** (S:System -> T:System): ログイン、電子署名など、認証を行い権限状態を遷移させる。
-- **Digital_Input** (S:System -> T:Digital_Object): フォーム入力を行い、データを作成する。
-- **Digital_Capture** (S:Physical_Artifact -> T:Digital_Object): スマホ等で書類を撮影し、データ化する。
-- **Digital_Upload** (S:Digital_Object -> T:Digital_Object): ファイルをシステムにアップロードし、添付済の状態にする。
-- **Digital_Submit** (S:Digital_Object -> T:State): データの入力や添付が全て終わり、送信して完了状態にする。
-
-## 省略・待機 (Skip / Wait)
-- **No_Action** (S:System -> T:Digital_Object): マイナ連携等により、入力・添付なしでデータが生成/確認されたとみなす。
-- **Wait_Result** (S:State -> T:State): 申請完了後、通知が届くのを待つ。
+{type_definitions}
 
 # 出力について
 提供されたスキーマに従って、構造化データを出力してください。

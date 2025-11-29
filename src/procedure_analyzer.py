@@ -7,7 +7,7 @@ from langgraph.graph import END, StateGraph
 from config import DEFAULT_SEARCH_K, MAX_GENERATION_RETRIES, MAX_SEARCH_LOOPS, MODEL_FAST, MODEL_HIGH_QUALITY
 from schemas import AnalysisResult, EvaluationResult, UrlSelection
 from states import ResearchState
-from utils import get_llm, get_search_tool, load_personas, load_prompt
+from utils import generate_prompt_definitions, get_llm, get_search_tool, load_personas, load_prompt
 from validator import GraphValidator
 
 
@@ -81,8 +81,6 @@ class ProcedureAnalyzer:
         """検索を実行し、URL候補を挙げる"""
         print(f"--- Search Node (Loop: {state['search_loop_count']}) ---")
 
-        results_text = []
-
         include_domains = None
         query = ""
         if state["search_loop_count"] == 0:
@@ -95,12 +93,29 @@ class ProcedureAnalyzer:
 
         # 検索ツールの取得
         search_tool = get_search_tool(k=DEFAULT_SEARCH_K, include_domains=include_domains)
-        print(f"Searching for: {query}")
-        results = search_tool.invoke(query)
-        if results:
-            results_text.append(f"--- Search Results for '{query}' ---\n{results}")
+        search_results = search_tool.invoke(query)
+        if not search_results:
+            # 検索結果ゼロの場合のフォールバック
+            print("No search results found.")
+            return {
+                "search_queries": [query],
+                "collected_texts": [f"--- Search Results for '{query}' ---\n(No results found)"],
+            }
 
-        return {"search_queries": [query], "collected_texts": ["\n\n".join(results_text)]}
+        visited_set = set(state.get("visited_urls", []))
+        filtered_results = [res for res in search_results if res["url"] and res["url"] not in visited_set]
+        excluded_count = len(search_results) - len(filtered_results)
+
+        print(f"Search found {len(search_results)} results. Filtered out {excluded_count} visited URLs.")
+
+        results_str_list = []
+        for r in filtered_results:
+            title = r.get("title", "No Title")
+            url = r.get("url", "")
+            content = r.get("content", "")[:300].replace("\n", " ")
+            results_str_list.append(f"- [{title}]({url}): {content}")
+        formatted_results = f"--- Search Results for '{query}' ---\n" + "\n".join(results_str_list)
+        return {"search_queries": [query], "collected_texts": [formatted_results]}
 
     def _crawl_node(self, state: ResearchState):
         """有望なURLを選定し、スクレイピングする"""
@@ -191,6 +206,7 @@ class ProcedureAnalyzer:
             target_procedure=state["target_procedure"],
             persona=target_persona,
             input_text=input_text,
+            type_definitions=generate_prompt_definitions(),
         )
 
         structured_llm = cast(Runnable[str, AnalysisResult], self.llm_high_quality.with_structured_output(AnalysisResult))

@@ -1,74 +1,35 @@
-"""
-グラフデータの可視化・分析スクリプト
-
-output/graphsからJSONファイルを読み込み、NetworkXでグラフを可視化し、
-コスト分析（積み上げ棒グラフ等）を実行する。
-"""
-
 import argparse
 import glob
 import json
 import os
+from typing import Any
 
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-# 日本語フォントの設定
+# 定義ファイルからEnumとメタデータをインポート
+from definitions import EDGE_DEFINITIONS, EdgeType, NodeType
+
+# 日本語フォントの設定 (環境に合わせて調整してください)
+# Linux/Macなら "Noto Sans CJK JP", Windowsなら "Meiryo" や "MS Gothic"
 plt.rcParams["font.family"] = "Noto Sans CJK JP"
-plt.rcParams["font.sans-serif"] = ["Noto Sans CJK JP", "DejaVu Sans"]
+plt.rcParams["font.sans-serif"] = ["Noto Sans CJK JP", "DejaVu Sans", "Meiryo"]
 
-# コストテーブル（単位: 分）
-COST_TABLE = {
-    # Physical Actions
-    "Physical_Acquire_Resident": 15,  # 役所で取得
-    "External_Acquire": 60,  # 外部機関からの取得
-    "Physical_Print_Store": 5,  # 店舗で印刷
-    "Physical_Print_Home": 5,  # 自宅で印刷
-    "Physical_Get_Material": 2,  # 材料取得
-    "Physical_Fill": 15,  # 手書き記入
-    "Physical_Copy_Store": 5,  # コピー作業
-    "Physical_Enclose": 2,  # 書類添付・整理
-    "Physical_Submit_Window": 15,  # 窓口提出（移動含む）
-    "Physical_Submit_Mail": 10,  # 郵送作業
-    # Digital Actions
-    "Digital_Access": 1,  # アクセス
-    "Digital_Download": 2,  # ダウンロード
-    "Digital_Input": 10,  # Web入力
-    "Digital_Auth": 5,  # 認証・電子署名
-    "Digital_Capture": 5,  # 撮影・スキャン
-    "Digital_Upload": 2,  # ファイルアップロード
-    "Digital_Submit": 1,  # 送信ボタン
-    # Time/Absence Actions
-    "No_Action": 0,  # 省略されたアクション
-    "Wait_Result": 0,  # 待機時間（コストとして計上しない）
-}
+# --- 定義ファイルからスタイル辞書を生成 ---
+EDGE_STYLES = {edge_enum: meta["meta"] for edge_enum, meta in EDGE_DEFINITIONS.items()}
 
-# カテゴリーごとの色分け（可視化用）
-TYPE_COLORS = {
-    "Physical_Acquire_Resident": "#FF6B6B",
-    "External_Acquire": "#9B59B6",
-    "Physical_Print_Store": "#FFD1D1",
-    "Physical_Print_Home": "#FFB3B3",
-    "Physical_Get_Material": "#FFCDB3",
-    "Physical_Fill": "#FFA07A",
-    "Physical_Copy_Store": "#FF8E8E",
-    "Physical_Enclose": "#FFCDB3",
-    "Physical_Submit_Window": "#FF6B6B",
-    "Physical_Submit_Mail": "#FF8E8E",
-    "Digital_Access": "#74B9FF",
-    "Digital_Download": "#96CEB4",
-    "Digital_Input": "#4ECDC4",
-    "Digital_Auth": "#45B7D1",
-    "Digital_Capture": "#FFEAA7",
-    "Digital_Upload": "#96CEB4",
-    "Digital_Submit": "#74B9FF",
-    "No_Action": "#B2BEC3",
-    "Wait_Result": "#DFE6E9",
+# ノードの色定義 (definitions.pyにない場合はここで定義)
+NODE_COLORS = {
+    NodeType.Process_State: "#FFCCCC",  # 赤系 (State)
+    NodeType.Digital_System: "#E5F5FF",  # 青系 (System)
+    NodeType.Digital_Data_Object: "#E5FFE5",  # 緑系 (Data)
+    NodeType.Physical_Raw_Material: "#FFFFCC",  # 黄系 (Raw)
+    NodeType.Physical_Processed_Artifact: "#F5F5F5",  # グレー系 (Artifact)
 }
 
 
-def load_graph_data(file_path: str) -> dict:
+def load_graph_data(file_path: str) -> dict[str, Any]:
     """JSONファイルからグラフデータを読み込む"""
     with open(file_path, encoding="utf-8") as f:
         return json.load(f)
@@ -84,12 +45,21 @@ def create_networkx_graph(nodes: list[dict], edges: list[dict]) -> nx.DiGraph:
 
     # エッジを追加
     for edge in edges:
+        # 文字列のTypeからEnumを取得 (存在しない場合はデフォルト値を設定)
+        try:
+            etype = EdgeType(edge["type"])
+            meta = EDGE_STYLES.get(etype, {"base_cost": 0, "color": "black", "style": "solid"})
+        except ValueError:
+            meta = {"base_cost": 0, "color": "black", "style": "solid"}
+
         G.add_edge(
             edge["source_id"],
             edge["target_id"],
-            description=edge["description"],
+            description=edge.get("description", ""),
             type=edge["type"],
-            cost=COST_TABLE.get(edge["type"], 0),
+            cost=meta["base_cost"],
+            color=meta.get("color", "black"),
+            style=meta.get("style", "solid"),
         )
     return G
 
@@ -117,42 +87,66 @@ def visualize_graph(G: nx.DiGraph, title: str, output_path: str):
     plt.figure(figsize=(14, 10))
 
     # レイアウト計算
-    # pos = nx.spring_layout(G, k=2, iterations=50, seed=42)
-    pos = nx.planar_layout(G, scale=1, center=None, dim=2)
+    # 階層構造が見やすいレイアウトを使用 (dotなどがあればベターだが標準ならspringかkamada_kawai)
+    try:
+        # pygraphvizが必要な場合があるため、なければspring_layout
+        pos = nx.nx_agraph.graphviz_layout(G, prog="dot")
+    except ImportError:
+        pos = nx.spring_layout(G, k=1.5, iterations=50, seed=42)
 
-    # ノードの描画
+    # ノード色の決定
     node_colors = []
     for node in G.nodes():
-        node_type = G.nodes[node].get("type", "")
-        if "State" in node_type:
-            node_colors.append("#FFE5E5")
-        elif "System" in node_type:
-            node_colors.append("#E5F5FF")
-        elif "Digital" in node_type:
-            node_colors.append("#E5FFE5")
-        else:
-            node_colors.append("#F5F5F5")
+        node_type_str = G.nodes[node].get("type", "")
+        # Enum文字列と一致する色を取得
+        color = "#FFFFFF"  # Default
+        for ntype, c in NODE_COLORS.items():
+            if ntype.value == node_type_str:
+                color = c
+                break
+        node_colors.append(color)
 
-    nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=2000, alpha=0.9)
+    # ノードの描画
+    nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=2500, edgecolors="gray", alpha=0.9)
 
-    # エッジの描画
-    nx.draw_networkx_edges(G, pos, edge_color="#888888", arrows=True, arrowsize=20, width=2)
+    # エッジの描画 (色やスタイルを個別に適用)
+    edges = G.edges(data=True)
+    for u, v, data in edges:
+        nx.draw_networkx_edges(
+            G,
+            pos,
+            edgelist=[(u, v)],
+            edge_color=data.get("color", "black"),
+            style=data.get("style", "solid"),
+            arrows=True,
+            arrowsize=20,
+            width=2,
+        )
 
-    # ラベルの描画
+    # ラベルの描画 (改行を入れる等の工夫も可能)
     labels = {node: G.nodes[node].get("label", node) for node in G.nodes()}
-    nx.draw_networkx_labels(G, pos, labels, font_size=8, font_family="sans-serif")
+    nx.draw_networkx_labels(G, pos, labels, font_size=9, font_family="sans-serif")
+
+    # エッジラベル (コストを表示)
+    edge_labels = {(u, v): f"{d.get('cost')}min" for u, v, d in edges if d.get("cost", 0) > 0}
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
 
     plt.title(title, fontsize=16, pad=20)
     plt.axis("off")
+
+    # 凡例の追加 (簡易的)
+    # plt.legend(...) # 必要なら実装
+
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved: {output_path}")
+    print(f"Saved graph image: {output_path}")
 
 
 def create_cost_comparison_chart(all_data: dict, output_path: str):
     """コスト比較の積み上げ棒グラフを作成"""
     cities = list(all_data.keys())
+    # ファイル名から自治体名を抽出（文京区_2024... -> 文京区）
     city_names = [all_data[cid]["name"] for cid in cities]
 
     # データ準備
@@ -165,11 +159,15 @@ def create_cost_comparison_chart(all_data: dict, output_path: str):
     x = np.arange(len(cities))
     width = 0.35
 
-    ax.bar(x - width / 2, analog_costs, width, label="アナログ申請", color="#FF6B6B")
-    ax.bar(x + width / 2, digital_costs, width, label="デジタル申請", color="#4ECDC4")
+    rects1 = ax.bar(x - width / 2, analog_costs, width, label="アナログ申請", color="#FF6B6B")
+    rects2 = ax.bar(x + width / 2, digital_costs, width, label="デジタル申請", color="#4ECDC4")
 
-    ax.set_ylabel("所要時間（分）", fontsize=12)
-    ax.set_title("自治体別 申請手続きコスト比較", fontsize=14, pad=20)
+    # 値のラベル表示
+    ax.bar_label(rects1, padding=3)
+    ax.bar_label(rects2, padding=3)
+
+    ax.set_ylabel("推定所要時間（分）", fontsize=12)
+    ax.set_title("自治体別 申請手続き摩擦コスト比較", fontsize=14, pad=20)
     ax.set_xticks(x)
     ax.set_xticklabels(city_names, rotation=45, ha="right")
     ax.legend()
@@ -178,11 +176,11 @@ def create_cost_comparison_chart(all_data: dict, output_path: str):
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved: {output_path}")
+    print(f"Saved comparison chart: {output_path}")
 
 
 def analyze_graphs(input_dir: str, output_dir: str):
-    """グラフデータを分析"""
+    """ディレクトリ内の全JSONファイルを分析"""
     # JSONファイルを検索
     json_files = glob.glob(os.path.join(input_dir, "*.json"))
 
@@ -196,57 +194,78 @@ def analyze_graphs(input_dir: str, output_dir: str):
     all_data = {}
 
     for json_file in json_files:
-        city_id = os.path.basename(json_file).replace(".json", "").split("_")[0]
+        # ファイル名からID/自治体名を取得
+        filename = os.path.basename(json_file)
+        city_id = filename.split("_")[0]  # "文京区_timestamp.json" -> "文京区"
 
         print(f"\nProcessing: {city_id}")
 
-        # データ読み込み
-        graph_data = load_graph_data(json_file)
+        try:
+            # データ読み込み
+            graph_data = load_graph_data(json_file)
 
-        # グラフ作成
-        analog_graph = create_networkx_graph(graph_data.get("analog_nodes", []), graph_data.get("analog_edges", []))
-        digital_graph = create_networkx_graph(graph_data.get("digital_nodes", []), graph_data.get("digital_edges", []))
+            # analysis_result直下にあるか、final_output内にあるかで分岐（Schemaの変更に対応）
+            if "analysis_result" in graph_data:
+                res = graph_data["analysis_result"]
+            elif "final_graph" in graph_data:  # 旧スキーマ対応
+                res = graph_data["final_graph"]
+            else:
+                res = graph_data  # フラットな場合
 
-        # コスト計算
-        analog_cost = calculate_total_cost(analog_graph)
-        digital_cost = calculate_total_cost(digital_graph)
-        reduction_rate = ((analog_cost - digital_cost) / analog_cost * 100) if analog_cost > 0 else 0
+            # グラフ作成
+            analog_graph = create_networkx_graph(res.get("analog_nodes", []), res.get("analog_edges", []))
+            digital_graph = create_networkx_graph(res.get("digital_nodes", []), res.get("digital_edges", []))
 
-        print(f"  アナログコスト: {analog_cost}分")
-        print(f"  デジタルコスト: {digital_cost}分")
-        print(f"  削減率: {reduction_rate:.1f}%")
+            # コスト計算
+            analog_cost = calculate_total_cost(analog_graph)
+            digital_cost = calculate_total_cost(digital_graph)
 
-        # データ保存
-        all_data[city_id] = {
-            "name": city_id,
-            "analog_graph": analog_graph,
-            "digital_graph": digital_graph,
-            "analog_cost": analog_cost,
-            "digital_cost": digital_cost,
-            "reduction_rate": reduction_rate,
-            "analog_breakdown": get_cost_breakdown(analog_graph),
-            "digital_breakdown": get_cost_breakdown(digital_graph),
-        }
+            if analog_cost > 0:
+                reduction_rate = (analog_cost - digital_cost) / analog_cost * 100
+            else:
+                reduction_rate = 0
 
-        # グラフ可視化
-        visualize_graph(
-            analog_graph, f"{city_id} - アナログ申請フロー", os.path.join(output_dir, f"{city_id}_analog_graph.png")
-        )
-        visualize_graph(
-            digital_graph, f"{city_id} - デジタル申請フロー", os.path.join(output_dir, f"{city_id}_digital_graph.png")
-        )
+            print(f"  アナログコスト: {analog_cost}分")
+            print(f"  デジタルコスト: {digital_cost}分")
+            print(f"  削減率: {reduction_rate:.1f}%")
 
-    # 比較チャート作成
-    if len(all_data) > 1:
-        create_cost_comparison_chart(all_data, os.path.join(output_dir, "cost_comparison.png"))
+            # データ保存
+            all_data[city_id] = {
+                "name": city_id,
+                "analog_cost": analog_cost,
+                "digital_cost": digital_cost,
+                "reduction_rate": reduction_rate,
+            }
+
+            # グラフ可視化 (個別に保存)
+            visualize_graph(
+                analog_graph,
+                f"{city_id} - アナログ申請フロー (コスト: {analog_cost}分)",
+                os.path.join(output_dir, f"{filename}_analog.png"),
+            )
+            visualize_graph(
+                digital_graph,
+                f"{city_id} - デジタル申請フロー (コスト: {digital_cost}分)",
+                os.path.join(output_dir, f"{filename}_digital.png"),
+            )
+
+        except Exception as e:
+            print(f"Error processing {json_file}: {e}")
+            import traceback
+
+            traceback.print_exc()
+
+    # 比較チャート作成 (全自治体分)
+    if len(all_data) > 0:
+        create_cost_comparison_chart(all_data, os.path.join(output_dir, "total_comparison.png"))
 
     print(f"\n✓ Analysis complete. Results saved to {output_dir}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Visualize and analyze procedure graphs")
-    parser.add_argument("--input-dir", default="output/graphs", help="Directory containing JSON graph files")
-    parser.add_argument("--output-dir", default="output/visualizations", help="Directory to save visualizations")
+    parser.add_argument("--input-dir", default="./output/graphs", help="Directory containing JSON graph files")
+    parser.add_argument("--output-dir", default="./output/viz", help="Directory to save visualizations")
 
     args = parser.parse_args()
 

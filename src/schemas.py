@@ -1,30 +1,8 @@
-from typing import Literal
-
 from pydantic import BaseModel, Field
 
+from definitions import EdgeType, NodeType
+
 # --- 依存関係グラフ ---
-NodeType = Literal["State", "System", "Raw_Material", "Physical_Artifact", "Digital_Object"]
-EdgeType = Literal[
-    "Physical_Acquire_Resident",
-    "External_Acquire",
-    "Physical_Print_Store",
-    "Physical_Print_Home",
-    "Physical_Get_Material",
-    "Physical_Fill",
-    "Physical_Copy_Store",
-    "Physical_Enclose",
-    "Physical_Submit_Window",
-    "Physical_Submit_Mail",
-    "Digital_Access",
-    "Digital_Download",
-    "Digital_Input",
-    "Digital_Auth",
-    "Digital_Capture",
-    "Digital_Upload",
-    "Digital_Submit",
-    "No_Action",
-    "Wait_Result",
-]
 
 
 class Node(BaseModel):
