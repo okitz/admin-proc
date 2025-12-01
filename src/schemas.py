@@ -22,12 +22,13 @@ class Edge(BaseModel):
 
 # --- 中間出力スキーマ ---
 class UrlSelection(BaseModel):
-    url: str = Field(..., description="選定されたURL")
+    id: int = Field(..., description="選定されたURLのID (1から始まるインデックス)")
     reason: str = Field(..., description="選定理由")
 
 
 class EvaluationResult(BaseModel):
-    is_sufficient: bool = Field(..., description="情報が十分かどうか")
+    is_relevant: bool = Field(..., description="直近でクロールしたページが、指定された手続きに本当に関連しているかどうか")
+    is_sufficient: bool = Field(..., description="全体の情報が、手続き分析のために十分かどうか")
     reason: str = Field(..., description="判定理由")
     missing_info: str | None = Field(None, description="不足している情報")
 

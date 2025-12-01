@@ -56,18 +56,47 @@ def run_analysis(city_id: str, procedure_name: str = "児童手当 認定請求"
 
 def main():
     parser = argparse.ArgumentParser(description="Administrative Procedure Cost Analysis CLI")
-    parser.add_argument("city_id", help="Target Municipality ID (e.g., 13105)")
+    parser.add_argument(
+        "city_id",
+        nargs="?",
+        default=None,
+        help="Target Municipality ID (e.g., 13105). Required if --all-city is not specified.",
+    )
     parser.add_argument("--procedure", default="児童手当 認定請求", help="Target Procedure Name (default: 児童手当 認定請求)")
     parser.add_argument("--output-dir", default="output/graphs", help="Directory to save results")
+    parser.add_argument("--all-city", action="store_true", help="Run analysis for all target cities.")
 
     args = parser.parse_args()
 
-    try:
-        run_analysis(args.city_id, args.procedure, args.output_dir)
-    except Exception:
-        import traceback
+    if args.all_city:
+        print("Running analysis for all target cities...")
+        failed_cities = []
+        for city in TARGET_CITIES:
+            try:
+                print("-" * 50)
+                run_analysis(city["id"], args.procedure, args.output_dir)
+            except Exception:
+                import traceback
 
-        traceback.print_exc()
+                print(f"An error occurred during analysis for city {city['id']}:")
+                traceback.print_exc()
+                failed_cities.append(city["id"])
+
+        print("-" * 50)
+        if failed_cities:
+            print(f"Analysis completed with failures for the following cities: {', '.join(failed_cities)}")
+        else:
+            print("All analyses completed successfully.")
+
+    elif args.city_id:
+        try:
+            run_analysis(args.city_id, args.procedure, args.output_dir)
+        except Exception:
+            import traceback
+
+            traceback.print_exc()
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":

@@ -10,7 +10,8 @@ class ResearchState(TypedDict):
 
     # 検索・収集フェーズ用
     search_queries: list[str]
-    visited_urls: list[str]
+    candidate_urls: list[str]
+    visited_urls: Annotated[list[str], operator.add]
     collected_texts: Annotated[list[str], operator.add]
 
     # 制御用
