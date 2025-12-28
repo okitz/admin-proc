@@ -15,7 +15,9 @@ __pycache__/
 # Project
 output/
 data/
+prompt_logs/
 !data/source_urls.json
+*.typ
 
 # Settings
 .vscode/

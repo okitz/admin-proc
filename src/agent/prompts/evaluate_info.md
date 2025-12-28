@@ -6,18 +6,16 @@
 
 # Input
 ## 直近で収集した情報
-- URL: {last_crawled_url}
-- 内容:
 {last_crawled_text}
+
+## それ以前に収集した情報
+{previous_texts}
 
 ## 前回までの評価で不足していた情報
 {previous_missing_info}
 
-## これまでに収集した全ての情報
-{full_text}
-
 # Instructions
-1.  **直近で収集した情報({last_crawled_url})の評価:**
+1.  **直近で収集した情報の評価:**
     -   このページは「{city_name}」の「{target_procedure}」に本当に関連していますか？ 関連している場合は `is_relevant` を `true` に、全く無関係なページ（例: 別の自治体の情報、広告ページ、エラーページ）であれば `false` にしてください。{city_name}の情報ではあるが、手続き内容が異なる場合、{target_procedure}と類似しており参考になる場合は `true` にしてください。
     -   `is_relevant` が `false` の場合、`is_sufficient` も `false` にしてください。
 

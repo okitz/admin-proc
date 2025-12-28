@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from definitions import EdgeType, NodeType
+from core.definitions import EdgeType, NodeType
 
 # --- 依存関係グラフ ---
 

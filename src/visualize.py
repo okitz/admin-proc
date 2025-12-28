@@ -9,7 +9,7 @@ import networkx as nx
 import numpy as np
 
 # 定義ファイルからEnumとメタデータをインポート
-from definitions import EDGE_DEFINITIONS, EdgeType, NodeType
+from core.definitions import EDGE_DEFINITIONS, EdgeType, NodeType
 
 # 日本語フォントの設定 (環境に合わせて調整してください)
 # Linux/Macなら "Noto Sans CJK JP", Windowsなら "Meiryo" や "MS Gothic"

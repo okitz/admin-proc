@@ -1,0 +1,970 @@
+rorok@LAPTOP-6U5UQQUT:~/eeic_lectures/3a/superD/admin-proc$ uv run src/cli.py --all-city
+Running analysis for all target cities...
+Starting analysis for 世田谷区 (13112) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 世田谷区公式ホームページの「児童手当のご案内」ページであり、児童手当の認定請求に関する全体像と具体的な手続き（必要書類、申請方法など）について最も多くの情報が網羅されている可能性が高いと判断しました。他の関連するPDFや電子申請のリンクもこのページから辿れると期待されます。)
+Target URL: https://www.city.setagaya.lg.jp/02413/18187.html
+Crawled 5745 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 世田谷区の公式ドキュメントであり、「児童手当認定請求書」と「添付書類」、「電子申請」について言及しているため、最も具体的な情報が含まれている可能性が高い。)
+Target URL: https://www.city.setagaya.lg.jp/documents/18187/jidouteategoannai.pdf
+Crawled 814109 chars.
+--- Evaluate Node ---
+評価中にエラーが発生しました: Timeout of 200.0s exceeded, last exception: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 250000, model: gemini-2.5-flash
+Please retry in 5.886624014s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 250000
+}
+, retry_delay {
+  seconds: 5
+}
+]
+Evaluation failed. Rolling back state to retry this loop.
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 世田谷区の児童手当認定請求に関する情報であり、電子申請についても言及があるため、最も有望と判断しました。)
+Target URL: https://kurashi.yahoo.co.jp/procedure/details/101002?cityId=13112
+Crawled 1669 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 4 (Reason: マイナポータルの児童手当認定請求手続きページであり、電子申請時に必要な添付書類が具体的に記載されているため、省略可能な書類を推測する上で最も有用な情報源であると判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OUjQMnBhHP0D47k63Zg8CaRyyRwJJ0WjyOQEfmr1WCLOEeBRIRorZ2FehCqBu9S2YW+cW+VVTc9o5GiIr5pEDotZnfNMilPWsKuSKoHl1hGSpjbp48dXjLozDUHwgrZppQ==
+Crawled 2017 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: マイナポータルの児童手当認定請求の申請詳細ページであり、手続きに必要な添付書類に関する情報が最も具体的に記載されている可能性が高い。電子申請時の省略可能な添付書類について直接的な情報が得られると期待されるため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S
+Crawled 2156 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 5 invalid or visited URLs, leaving 5 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: マイナポータルでの児童手当認定請求に関する手続きページであり、電子申請時に必要な添付書類について具体的に記載されているため、不足している情報に最も近い内容を提供していると判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OUjQMnBhHP0D47k63Zg8CaRyyRwJJ0WjyOQEfmr1WCLOZ57bEd8Gkai9d3gTGQPDJtzc8hB82LQM8hFK9n43DYn7dHiFKilDAYGNJBZUBz2wl2FWMikLqJJr0J1c6SEGL1sJ6LdaALILC4KtL7nfBD4qPAIzjsqJ8LwYiv993P2ISlrHXb3bAhIpMzS5HKtP+B7swOb/flBsE/pXCJrrSs4KAh8AKycHUKhr5uEUhOYb
+Crawled 1629 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類（児童手当認定請求）
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/13112_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 港区 (13103) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 港区公式サイトのFAQページであり、「児童手当の申請方法」というタイトルが、アナログ・デジタル両方の手続きの全体像を把握する上で最も適切と判断したため。)
+Target URL: https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html
+Crawled 2623 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請の詳細（必要なもの、添付書類の省略可否）、郵送申請時の切手代
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 港区の公式ウェブサイトであり、児童手当に関する包括的な情報が最も多く含まれている可能性が高い。電子申請と郵送申請の両方の手続きに関する情報、および不足している情報（添付書類の省略可否、郵送時の切手代）への手掛かりが得られると期待されるため。)
+Target URL: https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html
+Crawled 8608 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類、郵送申請時の切手代
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 港区の児童手当認定請求に関するマイナポータルでの手続き詳細画面であり、添付書類について言及があるため、不足している情報（電子申請時に省略可能な添付書類）を得られる可能性が高いと判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi23vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt
+Crawled 3001 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類、郵送申請時の切手代
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: マイナポータルでの児童手当認定請求に関する具体的な手続きページであり、添付書類に関する情報が含まれているため、電子申請時に省略可能な添付書類についての手がかりが得られる可能性が高い。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S
+Crawled 2156 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 5 invalid or visited URLs, leaving 5 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 港区の児童手当に関する情報であり、「認定請求」やオンライン・郵送での手続きに言及しているため、不足している情報（電子申請時の省略書類、郵送時の切手代）につながる可能性が最も高いと判断しました。)
+Target URL: https://kurashi.yahoo.co.jp/procedure/details/101?cityId=13103
+Crawled 2243 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の切手代、マイナポータルでの電子申請時に省略可能な添付書類（本人確認書類、個人番号確認書類、振込口座情報、健康保険証の写し）
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a12) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks.", "Connectivity Warning: Node '切手' (a13) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Logical Error: The physical item 'マイナンバーカードコピー(本人)' (a8) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Logical Error: The physical item 'マイナンバーカードコピー(配偶者)' (a9) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Logical Error: The physical item '預金通帳コピー' (a10) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Type Constraint Error at Edge[16] (Physical_Write_or_Process): Target node '手続き完了' has type 'Process_State', but this edge requires 'Physical_Processed_Artifact'.
+Type Constraint Error at Edge[28] (Digital_Download_File): Source node '審査・通知待ち' has type 'Process_State', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[29] (Physical_Write_or_Process): Source node '認定通知(電子)' has type 'Digital_Data_Object', but this edge requires one of ['Physical_Raw_Material', 'Physical_Processed_Artifact'].
+Type Constraint Error at Edge[29] (Physical_Write_or_Process): Target node '手続き完了' has type 'Process_State', but this edge requires 'Physical_Processed_Artifact'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 2 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Failed:
+Type Constraint Error at Edge[25] (Digital_Access_Website): Source node 'ぴったりサービス(港区)' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[29] (Digital_Access_Website): Source node 'マイナポータル(認証後)' has type 'Digital_System', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/13103_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 渋谷区 (13113) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 5 (Reason: 渋谷区の公式サイトであり、「児童手当 認定請求書」のPDFや記入例へのリンク、および請求者名義の口座情報など、手続きに関する具体的な情報が最も多く含まれていると判断しました。)
+Target URL: https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html
+Crawled 5234 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: オンライン申請時にマイナンバーカードと電子署名が必要かどうかの明記、およびオンライン申請時に省略可能な添付書類の明確なリスト
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: マイナポータル上の「児童手当の受給資格及び児童手当の額についての認定請求」に関するページであり、電子申請時にマイナンバーカードと電子署名が必要である旨が明記されているため、不足している情報に最も合致する。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S
+Crawled 2156 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: オンライン申請時に省略可能な添付書類の明確なリスト
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: マイナポータル上の児童手当に関する手続きページであり、添付書類について具体的に言及しているため、オンライン申請時に省略可能な添付書類のリストに関する情報が含まれている可能性が最も高い。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OcUR3iP1XRQSSLCI7IKju30cNy1R51Yjf0cSeX6uRqtK/UZxbVHdpNa6UA7x2ePlqtRqA1rENM0lF+FOuwMq3K01HHA20iI4f3TngRmTTrJ5cVfZllv/d34VzyncTPrZ/XtnQK9j8AAjBb5Uh5LjLIh9q0mqN1+XC4F0sLPqUkGbrWYyD+Xj9zkRh0eMNStUcc5kJE5kJhmwd91sWltbH18CSextNVNjcBp6FSptHItq
+Crawled 2847 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 「児童手当 認定請求」のオンライン申請時に省略可能な添付書類の明確なリスト
+--- Search Node (Loop: 3) ---
+Search found 9 results. Filtered out 4 invalid or visited URLs, leaving 5 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 渋谷区のURLではないが、「児童手当 認定請求」の「電子申請」における「本人確認書類」について言及しており、オンライン申請時の添付書類に関する情報が含まれている可能性が最も高いと判断したため。)
+Target URL: https://www.city.yokohama.lg.jp/kosodate-kyoiku/oyakokenko/teate/teate/jite-denshi.html
+Crawled 6566 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 渋谷区の児童手当認定請求をマイナポータルで電子申請する際に省略可能な添付書類の明確なリスト。
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: マイナポータルでの電子申請プロセスに直接関連しており、添付書類の登録ステップが含まれているため、電子申請時に省略可能な添付書類に関する情報が得られる可能性が最も高いと判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/contactInput/initGet?kc9XUt9I8/CU41afS8P1OcUR3iP1XRQSSLCI7IKju30cNy1R51Yjf0cSeX6uRqtK/UZxbVHdpNa6UA7x2ePlqtRqA1rENM0lF+FOuwMq3K01HHA20iI4f3TngRmTTrJ5cVfZllv/d34VzyncTPrZ/XtnQK9j8AAjBb5Uh5LjLIh9q0mqN1+XC4F0sLPqUkGbrWYyD+Xj9zkRh0eMNStUcVa4JVVyWRc23qO4JW6DfmjOtF65BdfAJjcgiyTnjXjp
+Crawled 424 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 渋谷区の児童手当認定請求をマイナポータルで電子申請する際に省略可能な添付書類の明確なリスト
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Logical Error: The physical item '封筒(宛名記入・切手貼付済)' (a8) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '電子署名画面' (d10) [Digital_System] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/13113_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 足立区 (13121) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 7 (Reason: マイナポータル上の「児童手当等の受給資格及び児童手当の額についての認定請求」に関する手続き詳細ページであり、電子申請と窓口・郵送での手続きの両方について言及しているため、アナログ・デジタルの両面から具体的な手続き情報を得る上で最も有望と判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF
+Crawled 2711 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の送付先住所（郵便番号含む）。電子申請時に添付書類として提出が不要となる書類の明確なリスト、および「別途原本の提出が必要」とされている書類の提出タイミングや方法の詳細。
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 7 (Reason: 足立区の公式サイトであり、「児童手当のご案内」というタイトルから、児童手当に関する総合的な情報が掲載されている可能性が高い。特に「郵送手続きのススメ」という記述があり、郵送申請時の送付先住所に関する情報が含まれていると期待できる。また、電子申請に関する情報へのリンクや概要も含まれている可能性があるため、不足している複数の情報を補完できる可能性が最も高いと判断した。)
+Target URL: https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html
+Crawled 7723 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: True, Missing: 特にありません。
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Logical Error: The physical item '提出物一式(未封入)' (a12) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a10) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks.", "Connectivity Warning: Node '切手' (a11) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Type Constraint Error at Edge[26] (Digital_Authenticate_User): Source node '申請情報入力データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[26] (Digital_Authenticate_User): Target node '電子署名済 申請データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/13121_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 名古屋市 (23100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 7 (Reason: 名古屋市公式ウェブサイトのURLであり、「児童手当」と「認定請求書」について言及しているため、手続きの全体像を把握する上で最も信頼性が高く、包括的な情報源であると判断しました。)
+Target URL: https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html
+Crawled 14370 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 電子申請時の具体的な手続きの流れと、情報連携により省略可能な添付書類。また、各申請方法（窓口、郵送、オンライン）における市民の具体的な手続きステップ、所要時間、および発生しうる費用に関する情報。
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市の公式手続きページであり、児童手当認定請求手続きについて具体的に説明しているため。特に電子申請に関する情報が含まれている可能性が高いと判断しました。)
+Target URL: https://ttzk.graffer.jp/city-nagoya/proc-search/procedures/cf358264-5cbf-4a03-91ef-cdd53b247d45
+Crawled 1172 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 電子申請時の具体的な手続きの流れ（入力項目、画面遷移など）、電子申請時に情報連携により省略可能な添付書類の具体的なリスト、各申請方法（窓口、郵送、オンライン）における市民の具体的な所要時間、各申請方法で発生しうる費用（郵送費、証明書発行手数料など）
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市の児童手当認定請求のオンライン申請ページであり、電子申請時の具体的な手続きの流れや情報連携による添付書類の省略に関する情報が含まれている可能性が最も高いと判断したため。)
+Target URL: https://ttzk.graffer.jp/city-nagoya/smart-apply/apply-procedure/1472889189505385213
+Crawled 0 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 電子申請時の具体的な入力項目と画面遷移、情報連携により省略可能な添付書類の具体的なリスト、各申請方法における市民の具体的な所要時間、各申請方法で発生しうる費用（郵送費、証明書発行手数料など）
+--- Search Node (Loop: 3) ---
+Search found 9 results. Filtered out 2 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 検索結果の中で唯一「児童手当 認定請求」の電子申請手続きに直接関連するURLであるため。ただし、要約に「北名古屋市役所」と記載されており、名古屋市の情報ではない点が課題です。他のURLは、名古屋市に関する情報や児童手当の具体的な手続きに関する情報を含んでいません。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK
+Crawled 2247 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 電子申請時の具体的な入力項目と画面遷移、情報連携により省略可能な添付書類の具体的なリスト、各申請方法における市民の具体的な所要時間、各申請方法で発生しうる費用（郵送費、証明書発行手数料など）
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 3 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 名古屋市に関する情報ではないが、不足している情報の一つである「情報連携により省略可能な添付書類の具体的なリスト」に関連する「戸籍証明書」と「他市区町村からの公用請求数の減少」について言及しており、情報連携の具体的な内容に最も近いと判断したため。)
+Target URL: https://www.cao.go.jp/bunken-suishin/kaigi/doc/kaisai63_sanko_1.pdf
+Crawled 1914006 chars.
+--- Evaluate Node ---
+評価中にエラーが発生しました: Timeout of 200.0s exceeded, last exception: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 250000, model: gemini-2.5-flash
+Please retry in 1.933116581s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 250000
+}
+, retry_delay {
+  seconds: 1
+}
+]
+Evaluation failed. Rolling back state to retry this loop.
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 4 invalid or visited URLs, leaving 5 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 提供された検索結果の中で、唯一「電子証明書」や「電子」の手続きに言及しており、電子申請に関する情報の一部を補う可能性がわずかにあるため。ただし、名古屋市のものではなく、児童手当の認定請求に直接関連する情報ではないため、本来の要件は満たしていません。)
+Target URL: https://www.city.edogawa.tokyo.jp/documents/53933/kazeika_an.pdf
+Crawled 1678470 chars.
+--- Evaluate Node ---
+評価中にエラーが発生しました: Timeout of 200.0s exceeded, last exception: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 250000, model: gemini-2.5-flash
+Please retry in 13.920859212s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 250000
+}
+, retry_delay {
+  seconds: 13
+}
+]
+Evaluation failed. Rolling back state to retry this loop.
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 5 invalid or visited URLs, leaving 4 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市および児童手当認定請求に直接関連する情報は見つかりませんでしたが、最も不足している情報（電子申請、情報連携）に言及している総務省の業務効率化に関する資料であるため、最も有望と判断しました。)
+Target URL: https://www.soumu.go.jp/main_content/000336842.pdf
+Crawled 16658535 chars.
+--- Evaluate Node ---
+評価中にエラーが発生しました: Timeout of 200.0s exceeded, last exception: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 250000, model: gemini-2.5-flash
+Please retry in 34.655515981s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 250000
+}
+, retry_delay {
+  seconds: 34
+}
+]
+Evaluation failed. Rolling back state to retry this loop.
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 6 invalid or visited URLs, leaving 3 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 提示された検索結果の中で、唯一「UI/UXの改善」に言及しており、電子申請時の具体的な入力項目や画面遷移に関する情報に最も間接的に関連する可能性があるため。ただし、名古屋市の児童手当認定請求とは直接関係がなく、求めている情報が得られる可能性は低い。)
+Target URL: https://www.gyoukaku.go.jp/hotline/img/2-g-6_kaitou_gyoukaku_20250328_R6.pdf
+Crawled 626348 chars.
+--- Evaluate Node ---
+評価中にエラーが発生しました: Timeout of 200.0s exceeded, last exception: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 250000, model: gemini-2.5-flash
+Please retry in 11.738944476s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 250000
+}
+, retry_delay {
+  seconds: 11
+}
+]
+Evaluation failed. Rolling back state to retry this loop.
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 7 invalid or visited URLs, leaving 2 candidates.
+An error occurred during execution for 名古屋市: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+An error occurred during analysis for city 23100: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+--------------------------------------------------
+Starting analysis for 大阪市 (27100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 大阪市の公式サイトであり、「児童手当」の「認定請求」に関する手続きの概要が記載されているため、最も多くの情報を含んでいる可能性が高いと判断しました。)
+Target URL: https://www.city.osaka.lg.jp/kodomo/page/0000370608.html
+Crawled 10713 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 各区の保健福祉センター児童手当担当の郵送先住所、および電子申請（大阪市行政オンラインシステム）で提出が省略できる添付書類の具体的な一覧
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 大阪市の公式サイトであり、「行政オンラインシステム」と「児童手当等の認定請求」に直接言及しているため、電子申請に関する具体的な情報や、添付書類の省略に関する情報、および関連する郵送先住所への手がかりが得られる可能性が最も高いと判断しました。)
+Target URL: https://www.city.osaka.lg.jp/nishi/page/0000608054.html
+Crawled 2390 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 各区の保健福祉センター児童手当担当の郵送先住所、および電子申請（大阪市行政オンラインシステム）で提出が省略できる添付書類の具体的な一覧
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 大阪市の公式サイトから提供されている児童手当認定請求書そのものであり、最も直接的に関連する情報源であるため。フォーム内に郵送先住所や添付書類に関する情報が含まれている可能性がある。)
+Target URL: https://www.city.osaka.lg.jp/kodomo/cmsfiles/contents/0000627/627381/20240901_ninteiseikyusyo.docx
+Crawled 34613 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 各区の保健福祉センター児童手当担当の郵送先住所、および電子申請（大阪市行政オンラインシステム）で提出が省略できる添付書類の具体的な一覧
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 「児童手当 認定請求」に関するマイナポータルの電子申請手続き詳細ページであり、電子申請で提出が省略できる添付書類に関する情報が含まれている可能性があるため。他のURLは大阪市以外の自治体のものであるか、内容が関連していません。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?feleGvMNKyi+TiMcUxrrB8+U7KXFTxoGUDFeSDKjvq7YwvhaIsFbVu5rNrlTejsLjvlT0LTPWz8TmSFu+vCEXPquqz+5C1I9fVQNQjVJBq/NM5lT7mTXLZqW3Gw8Jat9ClW1ApK5idtrVGJ3k7jWW3wDgfK0quKFsGEvzZg2gMMkpKTka8ZldGQmFJoqbtxot69E328TzNKmHmxGWbvCo3NSq03n0/VFUiYZiU1W9EklS7cTBM33nmU8qvAN68Bw
+Crawled 3294 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 検索結果に大阪市の情報がないため、最も関連性の高い「児童手当の新規認定請求の手続詳細説明」を含むURLを選定しました。電子申請や郵送手続き、追加書類に関する言及があり、不足している情報（郵送先住所、電子申請で省略できる添付書類）に最も近い内容が期待できます。ただし、大阪府島本町の情報である点に留意が必要です。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?UHnqAiU1Ct3Ng4VB5Pt+PkHppnrBonJoBQxRjDk/aSMkPQvmnLGowy5OQ4P/Es9kuIRT/C5pSv8cqkJDy1LBxNG0DiYtH9tdBSP7mtpPYSMYQOJdU0SmReySq+qbTK7hqDZS46Iq53fJTm4ISQaKbhEs5iRxZRtl+/K/S2OC/tw0vw2Wa5muZY4DhrZHrjft8i/SiFkURC9LlSiofQoUR8t/3G8Ci+v/t2Nz+wY50USliNdwPKy5ZAyNdtRgyQVR
+Crawled 2547 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 大阪市における電子申請（大阪市行政オンラインシステム）で提出が省略できる添付書類の具体的な一覧
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '空の封筒' (a8) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks.", "Connectivity Warning: Node '切手' (a9) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Logical Error: The physical item 'マイナンバーカード(コピー)' (a11) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Logical Error: The physical item '提出用封筒(宛名記入・切手貼付済)' (a10) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Type Constraint Error at Edge[17] (Digital_Access_Website): Source node '大阪市行政オンラインシステム' has type 'Digital_System', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Logical Error: The physical item '提出用封筒(宛名記入・切手貼付済)' (a12) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 5 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Failed:
+Structure Error: A cycle was detected in the graph [('a11', 'a11', 'forward')]. Dependency graphs must be Directed Acyclic Graphs (DAG). Please ensure the flow moves forward in time.
+Type Constraint Error at Edge[9] (Physical_Possess_PreExistent): Source node '切手' has type 'Physical_Raw_Material', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[19] (Digital_Access_Website): Source node '大阪市行政オンラインシステム' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[21] (Digital_Access_Website): Source node 'ログイン後トップ画面' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[26] (Digital_Submit_Data): Target node '電子署名済申請データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[27] (Digital_Submit_Data): Target node '電子署名済申請データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[28] (Digital_Submit_Data): Target node '電子署名済申請データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[29] (Digital_Submit_Data): Target node '電子署名済申請データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 2 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Failed:
+Logical Error: The physical item 'マイナンバーカードのコピー' (a8) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Logical Error: The physical item '本人確認書類のコピー' (a9) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Logical Error: The physical item '記入済 認定請求書' (a10) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Type Constraint Error at Edge[14] (Physical_Possess_PreExistent): Source node '認定通知書' has type 'Physical_Processed_Artifact', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[14] (Physical_Possess_PreExistent): Target node '手続き完了' has type 'Process_State', but this edge requires one of ['Physical_Processed_Artifact', 'Physical_Raw_Material'].
+Type Constraint Error at Edge[21] (Digital_Access_Website): Source node 'ログイン後トップ画面' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[24] (Digital_Submit_Data): Target node '電子署名済申請データ(送信前)' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[27] (Digital_Access_Website): Target node '手続き完了' has type 'Process_State', but this edge requires 'Digital_System'.
+Validation failed. Retrying generation...
+An error occurred during execution for 大阪市: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+An error occurred during analysis for city 27100: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+--------------------------------------------------
+Starting analysis for 広島市 (34100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 6 (Reason: 広島市公式のオンライン手続ポータルサイト内の、児童手当の新規認定請求に関する詳細ページであり、手続きの概要や受給資格について最も多くの情報を含んでいると期待されるため。)
+Target URL: https://apply.e-tumo.jp/city-hiroshima-u/offer/offerList_detailTop?tempSeq=19506
+Crawled 726 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 窓口・郵送申請の可否、申請に必要な書類（様式、添付書類）、書類の入手・作成方法、申請場所・送付先住所。マイナポータルでの電子申請時に必要な添付書類と省略可能な添付書類。
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 4 (Reason: 広島市公式ウェブサイトであり、「児童手当 認定請求」が電子申請可能であると明記されているため、アナログ・デジタル両方の申請に関する包括的な情報が含まれている可能性が最も高いと判断しました。)
+Target URL: https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html
+Crawled 4916 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 窓口・郵送申請に必要な書類（様式、添付書類）とその入手・作成方法、郵送申請の可否と送付先住所、マイナポータルでの電子申請時に必要な添付書類と省略可能な添付書類。
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 広島市公式ウェブサイトであり、「児童手当申請様式」や関連する書類について具体的に言及しているため、窓口・郵送申請に必要な書類とその入手・作成方法に関する情報が最も多く含まれている可能性が高い。)
+Target URL: https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html
+Crawled 2451 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の各区福祉課の送付先住所、マイナポータルでの電子申請時に必要な添付書類と省略可能な添付書類
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: マイナポータルでの電子申請時に必要な添付書類と、郵送で原本提出が必要な書類（省略できない書類）に関する具体的な情報が含まれているため。広島市固有の郵送先住所は含まれていないが、添付書類に関する情報としては最も有望。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?0jvmveTGZlWUg0ftErzNFBTto1eaUrq4AvMEo1EUJyoNA7PNfC/bhngdbFciQXeNOxc/9mzR7rcLWEkhbRE7MTaQ1RIqO5HP8OcpcTt4GglyWOTTClscO8Ir/fqT+Pw6HAvLK9L8OgiUXNezE0mdUVLjvV5yoqUcu2TdWP8Zxc4fGZA7zQgXvJG+EGLqsKDKHNKUezl41cQolKb59H6p6vIQlXIcW83ju9dEcK/T6hzNQe9Utqc/wFQF5B2oU8Dl
+Crawled 3235 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: マイナポータルでの電子申請に必要な添付書類について、具体的な書類名（住民票の写し）とその提出に関する詳細（別途原本の提出が必要）が記載されており、不足している情報に最も合致すると判断したため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?G3pyGMPVNra3+GZa3DCT/T2aIXfjoHVeicIIPWich4u27yWHgCdbMFlBl91QAe3qiChLl/EQ1HaSlMEaNUoaJ0ptL/dEtpcipfHyZly4JUFwtdD7I3wqFoEQ5hSsDvr2FlFj86+Sx6Ja9RptpYslxq54HVcVdlZPkJA/jskA43UQz8d0lzyqT8Dt5hpSujwoaEGELdLLlTPRWBrKWKPgqEqyhFD7k8gLLk1IVGR/V61MlUEXAhccsOTXMIFbDnHL
+Crawled 2122 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/34100_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 福岡市 (40130) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 福岡市の公式ウェブサイト（子育て情報ポータル）であり、「児童手当について」の全体像を把握する上で最も適切。特に「持参するもの」が明記されており、手続きに必要な情報が多く含まれていると期待されるため。)
+Target URL: https://kodomo.city.fukuoka.lg.jp/info/2038
+Crawled 12011 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求の郵送申請の可否、郵送申請が可能な場合の送付先住所と郵送費用、および各申請方法（窓口、電子申請）における具体的な所要時間の目安やその他の費用（証明書発行手数料など）。
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 福岡市の公式サイトであり、「児童手当の電子申請について」というタイトルから、申請方法全般（電子申請、窓口、郵送の可否など）に関する詳細な情報、およびそれに伴う費用や所要時間について最も多くの情報が得られる可能性が高いと判断しました。)
+Target URL: https://www.city.fukuoka.lg.jp/kodomo-mirai/k-katei/child/jidouteatedennshishinsei.html
+Crawled 5138 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求の郵送申請の可否、郵送申請が可能な場合の送付先住所と郵送費用、および各申請方法（窓口、電子申請）における具体的な所要時間の目安やその他の費用（証明書発行手数料など）。
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: マイナポータル上の福岡市博多区の児童手当新規申請に関するページであり、具体的な手続き情報が含まれている可能性が最も高いと判断したため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?IihrBz0LrXKC6GiSCtXkTgJjvTLlDoT6z2hUCM+CtzYVSSkKdktOj25+Pk35EB/xq4gnhbPBnBNP9Zz7yY+A2AOXhfzAbkGpVh08jP6NQwgnIHcAgBsQttmJzEeN+gcuiCIGPXOLsAY17mzWkeaAJA==
+Crawled 5439 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求の各申請方法（窓口、電子申請）における具体的な所要時間の目安、および申請に伴うその他の費用（証明書発行手数料など）
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 福岡市に特化したURLが見つからないため、児童手当制度全体の概要を最も権威ある情報源として提供しているこども家庭庁のページを選定しました。ただし、福岡市における具体的な所要時間や費用に関する情報は含まれていない可能性が高いです。)
+Target URL: https://www.cfa.go.jp/policies/kokoseido/jidouteate/annai
+Crawled 3177 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求の各申請方法（窓口、電子申請）における具体的な所要時間の目安、および申請に伴うその他の費用（証明書発行手数料など）
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 福岡市に特化した情報は見つかりませんでしたが、他の自治体の情報を選ばないという制約に基づき、児童手当の申請方法に関する一般的な情報を提供する唯一のURLを選定しました。具体的な所要時間や費用については、福岡市に直接確認する必要があります。)
+Target URL: https://biz.moneyforward.com/payroll/basic/54457
+Crawled 4707 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求の各申請方法（窓口、電子申請）における具体的な所要時間の目安、および申請に伴うその他の費用（証明書発行手数料など）
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Type Constraint Error at Edge[15] (Digital_Authenticate_User): Source node '申請情報入力データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[15] (Digital_Authenticate_User): Target node '電子署名済 申請データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Type Constraint Error at Edge[10] (Digital_Access_Website): Source node 'マイナポータル(ログイン済)' has type 'Digital_System', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/40130_児童手当 認定請求.json
+--------------------------------------------------
+--------------------------------------------------
+Analysis completed with failures for the following cities: 23100, 27100
+
+rorok@LAPTOP-6U5UQQUT:~/eeic_lectures/3a/superD/admin-proc$ uv run src/cli.py --all-city
+Running analysis for all target cities...
+Starting analysis for 札幌市 (01100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 札幌市における児童手当の認定請求手続きについて、対象者、内容、電子申請の有無、手続きの流れなど、アナログ・デジタル両方の側面から全体像を把握するための最も多くの情報を含んでいると判断したため。)
+Target URL: https://kurashi.yahoo.co.jp/procedure/details/101002?cityId=01100
+Crawled 2112 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 札幌市における児童手当認定請求書の具体的な入手方法（ダウンロードURLや窓口での取得場所）、郵送申請時の送付先住所、マイナポータルでの電子申請時に電子署名が必要か、および省略可能な添付書類
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 札幌市の公式サイトであり、「児童手当」に関する総合的な情報ページであるため、認定請求書の入手方法、郵送先、電子申請に関する情報、添付書類など、不足している情報の多くを網羅している可能性が最も高いと判断しました。)
+Target URL: https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html
+Crawled 9452 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の送付先住所、マイナポータルでの電子申請時の電子署名の要否、マイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 4 (Reason: 札幌市の児童手当認定請求に関するマイナポータルでの電子申請ページであり、電子署名の要否や省略可能な添付書類に関する情報が最も含まれている可能性が高いと判断したため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?WsJjiNS3qXifsbvQgdKQfieOWPg3ZA9Q5vp8Gow0vSWlzxuhdgz65y4o+5h+mfk3EPE7tdaEhAIjh5VS1/NGsksK41+ZLrRIjMh9FXMh6nMFZIUfE6W+hGqZun26DHz+gYoKfy0xyUbsE3WdxLv5OLAiM4SC47+rsk9z9sxswDHxxJExaoFNJhIU0TNgQQAUJ8/rOwnQIN1MEWOaYW4YIVPtud/1jQnPEm27gzlv0GnbRWTYYKvfxQcne43/JSSd
+Crawled 3562 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: True, Missing: 特にありません。
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 2 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/01100_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 仙台市 (04100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 「児童手当のごあんない」というタイトルから、児童手当の認定請求に関する手続きの全体像（アナログ申請方法、必要書類など）が網羅的に記載されている可能性が高いと判断しました。郵送による申請についても言及されており、アナログ手続きに関する情報が豊富であると期待できます。)
+Target URL: https://int.sentia-sendai.jp/j/download/information/202209_zidouteate_panhuretto.pdf
+Crawled 223929 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 仙台市 児童手当 認定請求の申請手続き詳細（必要書類、申請方法、電子申請の可否、添付書類の省略可否など）
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: マイナンバーポータル上の仙台市の「児童手当 新規申請」の手続き詳細画面であり、電子申請と窓口での手続きの両方に言及しているため、申請手続き詳細（申請方法、電子申請の可否）に関する最も多くの情報を含んでいる可能性が高いと判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?IOb+LGUSVcXKerSwxtUxxQ78Mht6czUG79ll0X23sY79YI8PRoq3BibgApzNJKsxV9mnswkqxqW6+mC/iEBKqmv6lXb67iJJ0PN1kIMrtynQpaGZrOE0xm+1smns6W/gQ4+pOhkgN0gSc2a41fIzDLCFZFIL8ri1rY6Dqic7DSmX5PzIn0d+KmfMK7GQpYF3fDm7xKBDmtAUkWGERdM14DvNaxaOOoU/JGcK6rTn6qIqHqSynEbeesTig4AJKDC+
+Crawled 3057 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 仙台市 児童手当認定請求書 入手方法, 仙台市 児童手当 郵送申請 送付先, 仙台市 児童手当 電子申請 添付書類 省略
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 3 (Reason: 児童手当の認定請求書そのものの入手方法を提供しており、アナログ申請の具体的な手続き（郵送申請の送付先など）に関する情報も含まれている可能性が高い。また、電子申請への誘導も期待できるため、アナログ・デジタル両方の手続きを網羅する上で最も有望と判断した。)
+Target URL: https://www.city.sendai.jp/kodomo-jigyo/download/bunyabetsu/ninshin/h28shorui/ninte.html
+Crawled 3030 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 仙台市 児童手当 認定請求 申請方法, 仙台市 児童手当 郵送申請 送付先, 仙台市 児童手当 電子申請, 仙台市 児童手当 認定請求 必要書類
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 仙台市の公式ウェブサイトであり、「児童手当」に関する総合的な情報が掲載されている可能性が高い。申請方法、必要書類、窓口情報など、アナログ・デジタル両方の手続きに関する情報への入り口として最も適切と判断した。)
+Target URL: https://www.city.sendai.jp/kodomo-jigyo/kurashi/kenkotofukushi/kosodate/teate/jidoteate.html
+Crawled 7820 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請の具体的な送付先住所、および電子申請の詳細（利用可能なプラットフォーム、必要な本人確認方法、電子署名の要否、省略可能な添付書類）
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 仙台市の公式サイトであり、「児童手当に関する手続きの電子申請について」というタイトルが、不足している電子申請の詳細情報に直接関連しているため。郵送申請の送付先住所も、このページまたはリンク先のページで提供されている可能性が高い。)
+Target URL: https://www.city.sendai.jp/kodomo-kyufu/jidouteatedensisinnsei.html
+Crawled 1677 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: アナログ申請（郵送・窓口）の具体的な手続き方法（送付先住所、窓口、必要書類、入手・作成方法）と、電子申請時に省略可能な添付書類
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a10) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks.", "Connectivity Warning: Node '切手' (a11) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Logical Error: The physical item '健康保険証のコピー' (a7) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Logical Error: The physical item '銀行通帳のコピー' (a8) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Invalid ID Reference at Edge[4]: Source ID 'a1ag' is not defined in the nodes list. Please verify that the ID exists in the 'nodes' list.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a10) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/04100_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 文京区 (13105) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 文京区の公式サイトのPDFで、児童手当認定請求に関する具体的な案内が含まれているため、最も多くの情報を含んでいると判断しました。)
+Target URL: https://www.city.bunkyo.lg.jp/documents/1473/jidouteateannai.pdf
+Crawled 280197 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: PDFファイルの内容をテキスト形式で抽出した情報
+--- Search Node (Loop: 1) ---
+Search found 9 results. Filtered out 0 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 文京区の公式サイトであり、「児童手当の請求手続き」に関する具体的な情報（提出書類、手続きの流れ）が最も網羅的に記載されていると判断したため。アナログ・デジタル両方の手続きに関する手がかりも含まれている。)
+Target URL: https://www.city.bunkyo.lg.jp/b022/p001470.html
+Crawled 5103 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: マイナポータルでの電子申請時に省略可能な添付書類、および郵送申請時の切手代
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 文京区の公式サイトであり、「児童手当に関する電子申請一覧」というタイトルから、電子申請時の添付書類に関する情報や、関連する手続き（郵送申請を含む）へのリンクが最も多く含まれている可能性が高いと判断しました。)
+Target URL: https://www.city.bunkyo.lg.jp/b022/p007777.html
+Crawled 2372 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: アナログ申請（郵送・窓口）に必要な書類、入手方法、提出先、郵送時の切手代、およびマイナポータルでの電子申請時に省略可能な添付書類
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 4 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 5 (Reason: タイトルが「児童手当認定請求 - 東京都文京区 - マイナポータル」であり、文京区の児童手当の認定請求に関するマイナポータルでの具体的な手続き情報（電子申請時に省略可能な添付書類など）が含まれている可能性が最も高いと判断したため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OcAvtJpQDXXjMOLXn4bAPbhikKPcS2GekAhpMNEu5bb12TomPOcbnFtTNKDAM67HUAIdqkCf+lX6TZU2j0CCx8mA5rTBYWyDrh2jdgiIgJPJnHiwI08mjD/VkmK4LEIXMKHEj68FZettGA/J3zyNGKTdZUNWPtkNEgCjLLegdWjRqIiG9nDDVQkbUUu9idXd2G6dSozUF9hhoWfvL1XU75CTkgrCjRfwtZYM7Q2iJgjL
+Crawled 3367 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 文京区 児童手当 認定請求 窓口申請 郵送申請 必要書類 入手方法 提出先 切手代, マイナポータル 電子申請 添付書類 省略
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 文京区の公式ウェブサイトであり、「児童手当」に関する総合的な情報が最も網羅されている可能性が高いため。認定請求の具体的な手続き（窓口・郵送・電子申請）や必要書類、提出先などの詳細情報が期待できる。)
+Target URL: https://www.city.bunkyo.lg.jp/b022/p001469/index.html
+Crawled 6860 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 文京区 児童手当 認定請求 窓口申請 プロセス, 児童手当 郵送申請 切手代, マイナポータル 児童手当 電子申請 添付書類 省略
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Type Constraint Error at Edge[16] (Physical_Possess_PreExistent): Target node '手続き完了' has type 'Process_State', but this edge requires one of ['Physical_Processed_Artifact', 'Physical_Raw_Material'].
+Type Constraint Error at Edge[19] (Digital_Access_Website): Source node 'ログイン認証後のマイナポータル' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[29] (Digital_Enter_Text_Data): Source node '入力済申請データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[34] (Digital_Download_File): Source node '審査待ち' has type 'Process_State', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[35] (Digital_Access_Website): Source node '認定通知データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[35] (Digital_Access_Website): Target node '手続き完了' has type 'Process_State', but this edge requires 'Digital_System'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a9) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks.", "Connectivity Warning: Node '切手' (a10) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Logical Error: The physical item '健康保険証のコピー' (a6) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Invalid ID Reference at Edge[6]: Source ID 'a1agrav,target_id:' is not defined in the nodes list. Please verify that the ID exists in the 'nodes' list.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Connectivity Warning: Node '封筒' (a10) [Physical_Raw_Material] ends abruptly. Typically, Raw_Material or System nodes should not be sinks."]
+Validation Failed:
+Type Constraint Error at Edge[16] (Physical_Obtain_Required_Item): Target node '手続き完了' has type 'Process_State', but this edge requires 'Physical_Processed_Artifact'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Type Constraint Error at Edge[20] (Digital_Access_Website): Source node 'マイナポータル(ログイン後)' has type 'Digital_System', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+An error occurred during execution for 文京区: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+An error occurred during analysis for city 13105: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+--------------------------------------------------
+--------------------------------------------------
+Analysis completed with failures for the following cities: 13105
+
+Running analysis for all target cities...
+Starting analysis for 文京区 (13105) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 文京区の公式サイトのPDFで、児童手当認定請求に関する具体的な案内が含まれているため、最も多くの情報を含んでいると判断しました。)
+Target URL: https://www.city.bunkyo.lg.jp/documents/1473/jidouteateannai.pdf
+Crawled 280197 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: PDFファイルの内容をテキスト形式で抽出した情報
+--- Search Node (Loop: 1) ---
+Search found 9 results. Filtered out 0 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 文京区の公式サイトであり、「児童手当の請求手続き」に関する具体的な情報（提出書類、手続きの流れ）が最も網羅的に記載されていると判断したため。アナログ・デジタル両方の手続きに関する手がかりも含まれている。)
+Target URL: https://www.city.bunkyo.lg.jp/b022/p001470.html
+Crawled 5103 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 「児童手当認定請求のご案内（PDF：384KB）」の内容、マイナポータルでの電子申請時に省略可能な添付書類、郵送申請時の送付先住所、窓口申請時の具体的な提出場所
+--- Search Node (Loop: 2) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 文京区の公式サイトであり、「児童手当に関する電子申請一覧」というタイトルから、電子申請に関する具体的な情報や、他の申請方法への案内が含まれている可能性が高いため。不足している情報の多くを網羅的に補完できると期待される。)
+Target URL: https://www.city.bunkyo.lg.jp/b022/p007777.html
+Crawled 2372 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 「児童手当認定請求のご案内（PDF：384KB）」の内容、マイナポータルでの電子申請時に省略可能な添付書類、郵送申請時の送付先住所、窓口申請時の具体的な提出場所
+--- Search Node (Loop: 3) ---
+Search found 10 results. Filtered out 2 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 7 (Reason: URLのタイトルに「東京都文京区」と「児童手当認定請求」が明記されており、文京区の児童手当認定請求に関する具体的な情報（特に電子申請関連）が含まれている可能性が最も高いと判断したため。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OcAvtJpQDXXjMOLXn4bAPbhikKPcS2GekAhpMNEu5bb12TomPOcbnFtTNKDAM67HUAIdqkCf+lX6TZU2j0CCx8mA5rTBYWyDrh2jdgiIgJPJnHiwI08mjD/VkmK4LEIXMKHEj68FZettGA/J3zyNGKTdZUNWPtkNEgCjLLegdWjRqIiG9nDDVQkbUUu9idXd2G6dSozUF9hhoWfvL1XU75CTkgrCjRfwtZYM7Q2iJgjL
+Crawled 3367 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 児童手当認定請求のご案内（PDF）の具体的な内容、マイナポータルでの電子申請時に省略可能な添付書類の明確なリスト、郵送申請時の送付先住所、窓口申請時の具体的な提出場所
+--- Search Node (Loop: 4) ---
+Search found 10 results. Filtered out 3 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 5 (Reason: マイナポータルにおける児童手当認定請求の手続きページであり、不足している情報の一つである「マイナポータルでの電子申請時に省略可能な添付書類の明確なリスト」に直接関連する「手続に必要な添付書類」について言及があるため。文京区固有の情報ではないものの、電子申請における添付書類は共通する可能性が高い。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S
+Crawled 2156 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 文京区 児童手当 認定請求 申請方法、必要書類、電子申請時の添付書類省略可否、郵送先、窓口提出場所
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Type Constraint Error at Edge[16] (Physical_Possess_PreExistent): Target node '手続き完了' has type 'Process_State', but this edge requires one of ['Physical_Processed_Artifact', 'Physical_Raw_Material'].
+Type Constraint Error at Edge[19] (Digital_Access_Website): Source node 'ログイン認証後のマイナポータル' has type 'Digital_System', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[29] (Digital_Enter_Text_Data): Source node '入力済申請データ' has type 'Digital_Data_Object', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[34] (Digital_Download_File): Source node '審査待ち' has type 'Process_State', but this edge requires 'Digital_System'.
+Type Constraint Error at Edge[35] (Digital_Access_Website): Source node '認定通知データ' has type 'Digital_Data_Object', but this edge requires 'Process_State'.
+Type Constraint Error at Edge[35] (Digital_Access_Website): Target node '手続き完了' has type 'Process_State', but this edge requires 'Digital_System'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Invalid ID Reference at Edge[2]: Target ID 'a4' is not defined in the nodes list. Please verify that the ID exists in the 'nodes' list.
+Invalid ID Reference at Edge[7]: Source ID 'a4' is not defined in the nodes list. Please verify that the ID exists in the 'nodes' list.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Failed:
+Logical Error: The physical item '提出用封筒(切手貼付済)' (a11) was prepared/created but never submitted or enclosed. Please add a 'Physical_Combine_or_Package' (enclose) or 'Physical_Submit_Via_Mail' edge to use this item.
+Type Constraint Error at Edge[18] (Digital_Access_Website): Source node '認証済マイナポータル' has type 'Digital_System', but this edge requires 'Process_State'.
+Validation failed. Retrying generation...
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 2 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/13105_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 名古屋市 (23100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市公式の「児童手当認定請求手続き」に関するページで、オンライン申請の可否や窓口での手続きについて具体的に説明されており、アナログ・デジタルの両方の手続きに関する情報を含んでいるため。)
+Target URL: https://ttzk.graffer.jp/city-nagoya/proc-search/procedures/cf358264-5cbf-4a03-91ef-cdd53b247d45
+Crawled 1172 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 申請に必要な書類の一覧、書類の入手方法、アナログ申請（窓口・郵送）の具体的な手続きと提出先、オンライン申請時の添付書類の要否と省略可否、マイナンバーカードや電子署名の要否
+--- Search Node (Loop: 1) ---
+Search found 10 results. Filtered out 1 invalid or visited URLs, leaving 9 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市公式ウェブサイトであり、要約にマイナンバーカードの要否（省略可否）が明記されており、オンライン申請時の添付書類の要否に関する情報が含まれている可能性が高いと判断したため。)
+Target URL: https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html
+Crawled 14370 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: オンライン申請時に必要な添付書類、マイナンバーカードを利用した場合に省略可能な添付書類、および電子署名の要否
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 2 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: マイナポータル上の「児童手当等の受給資格及び児童手当の額についての認定請求」に関するページであり、オンライン申請、マイナンバーカード、電子署名について具体的に言及しているため、不足している情報に最も合致すると判断しました。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK
+Crawled 2247 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+--- Search Node (Loop: 3) ---
+Search found 9 results. Filtered out 3 invalid or visited URLs, leaving 6 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 名古屋市公式ウェブサイトのページであり、「オンライン手続き：添付書類」というタイトルが、オンライン申請時に必要な添付書類に関する情報を見つける上で最も関連性が高いと判断したため。)
+Target URL: https://www.city.nagoya.jp/kurashi/zeikin/1037356/1034720/1034722/1017922.html
+Crawled 1550 chars.
+--- Evaluate Node ---
+Last crawled content is not relevant. Discarding and rolling back state.
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 4 invalid or visited URLs, leaving 5 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 「特別児童扶養手当の認定請求書等」に言及があり、児童手当の認定請求と関連する手続きに関する情報が含まれている可能性が最も高いため。)
+Target URL: https://www.gyoukaku.go.jp/hotline/img/2-g-5_kaitou_gyoukaku_20250328_R5.xlsx
+Crawled 323030 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 名古屋市 児童手当 認定請求 オンライン申請 手順 費用, 名古屋市 児童手当 認定請求 郵送 手順 費用, 名古屋市 児童手当 認定請求 窓口 手順 費用, 名古屋市 児童手当 電子申請 電子署名
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Warnings: ["Data Aggregation Warning: 2 'Digital_Submit_Data' edges detected. Usually, application data should be aggregated into a single object before submission. Check if you can merge data nodes or use 'System_Auto_Link_Data' effectively."]
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/23100_児童手当 認定請求.json
+--------------------------------------------------
+Starting analysis for 大阪市 (27100) - 児童手当 認定請求...
+--- Search Node (Loop: 0) ---
+Search found 10 results. Filtered out 0 invalid or visited URLs, leaving 10 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 10 (Reason: 大阪市の公式サイトであり、「児童手当」に関する総合的な情報ページであるため、認定請求の手続きに関する詳細や関連情報が最も多く含まれている可能性が高いと判断しました。)
+Target URL: https://www.city.osaka.lg.jp/kodomo/page/0000370608.html
+Crawled 10713 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の各区保健福祉センター児童手当担当の具体的な送付先住所と、必要な切手代。大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧。
+--- Search Node (Loop: 1) ---
+Search found 9 results. Filtered out 2 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 大阪市の公式サイトから提供されている児童手当の「認定請求書」であり、郵送申請時の送付先住所や必要書類、電子申請に関する情報が含まれている可能性が最も高いと判断したため。)
+Target URL: https://www.city.osaka.lg.jp/kodomo/cmsfiles/contents/0000627/627381/20240901_ninteiseikyusyo.docx
+Crawled 34613 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の必要な切手代。大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧。
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 大阪市固有の情報ではないが、「児童手当」の申請書における「添付書類の省略」について言及しており、不足している情報（省略可能な添付書類）の概念に最も近い内容を含んでいるため。)
+Target URL: https://www.soumu.go.jp/main_content/000297710.pdf
+Content size exceeds limit of 1000000 bytes. Skipping.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の必要な切手代。大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧。
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: この文書は、地方自治体における児童手当申請時の添付書類省略に関する一般的な議論を含んでおり、ユーザーが求めている「省略可能な添付書類」の概念に最も関連性が高い。特定の他自治体の手続き情報ではないため、指示に反しない範囲で最も有望と判断した。)
+Target URL: https://www.soumu.go.jp/main_content/000297710.pdf
+Content size exceeds limit of 1000000 bytes. Skipping.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の送付先住所と必要な切手代。大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧。
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 「児童手当等の受給資格及び児童手当の額についての認定請求」が地方公共団体が優先的にオンライン化を推進すべき行政手続として挙げられており、児童手当の認定請求と電子申請の関連性を示す最も直接的な情報であるため。具体的な手続き情報は含まれていないが、他の選択肢は大阪市以外の手続き情報か、全く関係のない内容であるため、最も有望と判断した。)
+Target URL: https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/75540031-2bab-41ee-9671-0772f5cd82a6/37df1bdf/20250808_policies_mynumber_local-government_outline_02.pdf
+Content size exceeds limit of 1000000 bytes. Skipping.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の必要な切手代。大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧。
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 2 (Reason: 大阪市固有の情報ではないが、「児童手当」の申請書における「添付書類の省略」について言及しており、不足している情報（省略可能な添付書類）の概念に最も近い内容を含んでいるため。)
+Target URL: https://www.soumu.go.jp/main_content/000297710.pdf
+Content size exceeds limit of 1000000 bytes. Skipping.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の必要な切手代、各区保健福祉センター児童手当担当の郵送先住所、大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧
+--- Search Node (Loop: 2) ---
+Search found 9 results. Filtered out 1 invalid or visited URLs, leaving 8 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 大阪市の公式サイトであり、「児童手当」の「認定請求書」や「児童手当担当課問合せ先一覧」に言及があるため、郵送先住所などの不足情報を得る上で最も有望であると判断しました。)
+Target URL: https://www.city.osaka.lg.jp/kodomo/page/0000627381.html
+Crawled 6482 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 郵送申請時の必要な切手代、各区保健福祉センター児童手当担当の郵送先住所、大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧
+--- Search Node (Loop: 3) ---
+Search found 9 results. Filtered out 2 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 検索結果の中で唯一、「児童手当の新規認定請求の手続詳細説明画面」と明記されており、児童手当の認定請求に関する具体的な手続き情報を含んでいる可能性が最も高いと判断しました。ただし、このURLは大阪府島本町のものであり、大阪市の情報ではありません。)
+Target URL: https://app.oss.myna.go.jp/Application/procdetail/initGet?UHnqAiU1Ct3Ng4VB5Pt+PkHppnrBonJoBQxRjDk/aSMkPQvmnLGowy5OQ4P/Es9kuIRT/C5pSv8cqkJDy1LBxNG0DiYtH9tdBSP7mtpPYSMYQOJdU0SmReySq+qbTK7hqDZS46Iq53fJTm4ISQaKbhEs5iRxZRtl+/K/S2OC/tw0vw2Wa5muZY4DhrZHrjft8i/SiFkURC9LlSiofQoUR8t/3G8Ci+v/t2Nz+wY50USliNdwPKy5ZAyNdtRgyQVR
+Crawled 2547 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 大阪市各区保健福祉センター児童手当担当の郵送先住所、郵送申請時の必要な切手代、大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧
+--- Search Node (Loop: 4) ---
+Search found 9 results. Filtered out 2 invalid or visited URLs, leaving 7 candidates.
+--- Select & Crawl Node ---
+LLM selected ID: 1 (Reason: 大阪市の公式サイトであり、「行政オンラインシステム」に関する情報が掲載されているため、電子申請時の添付書類に関する具体的な情報が見つかる可能性が最も高いと判断しました。)
+Target URL: https://www.city.osaka.lg.jp/nishi/page/0000608054.html
+Crawled 2390 chars.
+--- Evaluate Node ---
+Is Relevant: True, Is Sufficient: False, Missing: 大阪市行政オンラインシステムでの電子申請時に省略可能な添付書類の具体的な一覧、大阪市各区保健福祉センター児童手当担当の郵送先住所、郵送申請時の必要な切手代
+Max search loop count reached. Proceeding to generation anyway.
+--- Generate Node ---
+--- Validate Node ---
+Validation Passed.
+Analysis completed successfully. Saved to output/graphs/27100_児童手当 認定請求.json
+--------------------------------------------------
+--------------------------------------------------
+All analyses completed successfully.

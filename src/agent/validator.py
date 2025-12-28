@@ -2,7 +2,7 @@ from typing import Any
 
 import networkx as nx
 
-from definitions import EDGE_DEFINITIONS, EdgeType, NodeType
+from core.definitions import EDGE_DEFINITIONS, EdgeType, NodeType
 
 
 class GraphValidator:

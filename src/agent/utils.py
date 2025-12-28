@@ -9,7 +9,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
 
-from definitions import EDGE_DEFINITIONS, NODE_DESCRIPTIONS
+from core.definitions import EDGE_DEFINITIONS, NODE_DESCRIPTIONS
 
 
 def get_llm(temperature: float = 0.0, model_name: str = "") -> BaseChatModel:
@@ -21,7 +21,7 @@ def get_llm(temperature: float = 0.0, model_name: str = "") -> BaseChatModel:
     else:
         # Default: Gemini (Google)
         target_model = model_name if model_name else "gemini-2.5-flash-lite"
-        return ChatGoogleGenerativeAI(model=target_model, temperature=temperature)
+        return ChatGoogleGenerativeAI(model=target_model, temperature=temperature, max_retries=0)
 
 
 def get_search_tool(k: int = 5, include_domains: list[str] | None = None) -> RunnableLambda | TavilySearch:
@@ -129,7 +129,3 @@ def generate_prompt_definitions() -> str:
         edge_text += f"    - {meta['description']}\n"
 
     return node_text + edge_text
-
-
-if __name__ == "__main__":
-    print(generate_prompt_definitions())
