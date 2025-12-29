@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from langchain_core.runnables import RunnableConfig
 
-from agent.analyzer import ProcedureAnalyzer
+from agent.agent import ProcedureAnalyzer
 from core.config import TARGET_CITIES
 
 # .envファイルの読み込み
@@ -12,18 +12,9 @@ load_dotenv()
 
 
 class AnalysisRunner:
-    """
-    手続き分析を実行し、結果を管理するクラス。
-    """
+    """手続き分析を実行し、結果を管理するクラス。"""
 
     def __init__(self, procedure_name: str = "児童手当 認定請求", output_dir: str = "output/graphs"):
-        """
-        AnalysisRunnerを初期化します。
-
-        Args:
-            procedure_name (str): 分析対象の手続き名。
-            output_dir (str): 結果を保存するディレクトリ。
-        """
         self.procedure_name = procedure_name
         self.output_dir = Path(output_dir)
         self.analyzer = ProcedureAnalyzer()
@@ -32,15 +23,7 @@ class AnalysisRunner:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def run_single(self, city_id: str) -> str | None:
-        """
-        指定された単一の自治体IDで分析を実行し、結果をJSONファイルとして保存する。
-
-        Args:
-            city_id (str): 分析対象の自治体ID。
-
-        Returns:
-            Optional[str]: 保存されたファイルパス。失敗した場合はNone。
-        """
+        """単一の自治体に対して分析を実行する。"""
         city_info = next((c for c in TARGET_CITIES if c["id"] == city_id), None)
         if not city_info:
             print(f"Warning: City ID {city_id} not found in configuration. Skipping.")
@@ -59,7 +42,7 @@ class AnalysisRunner:
             return str(file_path)
 
         try:
-            config: RunnableConfig = {"recursion_limit": 50}  # デフォルトの25から50に引き上げ
+            config: RunnableConfig = {"recursion_limit": 50}
             final_state = self.analyzer.run(city_name, self.procedure_name, config=config)
             result = final_state.get("analysis_result")
             if result:

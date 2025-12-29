@@ -2,9 +2,8 @@ from pydantic import BaseModel, Field
 
 from core.definitions import EdgeType, NodeType
 
+
 # --- 依存関係グラフ ---
-
-
 class Node(BaseModel):
     id: str = Field(..., description="ユニークなID (例: n1, n2)")
     label: str = Field(..., description="ノードの名称 (例: 申請書PDF)")

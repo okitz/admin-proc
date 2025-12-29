@@ -16,8 +16,6 @@ __pycache__/
 output/
 data/
 prompt_logs/
-!data/source_urls.json
-*.typ
 
 # Settings
 .vscode/

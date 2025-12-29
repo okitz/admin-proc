@@ -20,53 +20,6 @@ from core.schemas import AnalysisResult, EvaluationResult, UrlSelection
 _T = TypeVar("_T")
 
 
-# def create_gemini_retry(max_attempts: int = 4, default_wait: int = 5):
-#     """
-#     Gemini APIのResourceExhausted(Quota)エラー専用のリトライデコレータ。
-#     エラー内の retry_delay を尊重して待機時間を動的に調整します。
-#     """
-
-#     def my_wait(retry_state: RetryCallState) -> float:
-#         """待機直前にログを出し、待機時間を動的にセットする"""
-#         outcome = retry_state.outcome
-#         if outcome is None or not outcome.failed:
-#             return default_wait
-
-#         exception = outcome.exception()
-#         #
-#         if isinstance(exception, ResourceExhausted):
-#             # exceptionのattributesを調べる
-#             attrs = dir(exception)
-#             print(f"ResourceExhausted attributes: {attrs}")
-#             # エラーオブジェクトから retry_delay プロパティを探す
-#             retry_delay = getattr(exception, "retry_delay", None)
-#             print(f"ResourceExhausted encountered. retry_delay: {retry_delay}, {type(retry_delay)}")
-#             #
-
-#             wait_time = None
-#             actual_wait = default_wait
-#             if retry_delay:
-#                 if hasattr(retry_delay, "total_seconds"):
-#                     wait_time = retry_delay.total_seconds()
-#                 elif isinstance(retry_delay, (int, float)):
-#                     wait_time = retry_delay
-
-#             if wait_time is not None:
-#                 actual_wait = wait_time + 1.0
-#                 print(f"⚠️ Quota Exceeded. Gemini asked to wait {wait_time}s. Sleeping for {actual_wait:.1f}s...")
-#             return actual_wait
-#         else:
-#             print(f"Error occurred: {exception}. Retrying in {default_wait}s...")
-#             return default_wait
-
-#     return retry(
-#         stop=stop_after_attempt(max_attempts),
-#         wait=my_wait,
-#         retry=retry_if_exception_type(ResourceExhausted),
-#         reraise=True,
-#     )
-
-
 class ProcedureAnalyzer:
     # --- Constants ---
     # Node Names
@@ -214,7 +167,6 @@ class ProcedureAnalyzer:
 
     def _save_prompt_to_file(self, node_name: str, prompt: str) -> Path:
         """Saves the given prompt to a file for debugging/auditing."""
-        # src/agent/analyzer.py -> src/ -> project root
         log_dir = Path(__file__).parent.parent.parent / "prompt_logs"
         log_dir.mkdir(exist_ok=True)
 
@@ -228,19 +180,18 @@ class ProcedureAnalyzer:
         """HTMLコンテンツから不要なタグと空白を削除してテキストを抽出する"""
         soup = BeautifulSoup(html_content, "html.parser")
 
-        # 1. 不要なタグ（スクリプト、スタイル、ナビゲーション、ヘッダー、フッター等）を削除
+        # 不要なタグ（スクリプト、スタイル、ナビゲーション、ヘッダー、フッター等）を削除
         for tag in soup(["script", "style", "nav", "header", "footer", "aside"]):
             tag.decompose()
 
-        # 2. テキストを取得
+        # テキストを取得
         text = soup.get_text(separator="\n")
 
-        # 3. 空白と改行を正規化
-        # 3-1. 複数のスペースやタブを単一のスペースに置換
+        # 複数のスペースやタブを単一のスペースに置換
         text = re.sub(r"[ \t]+", " ", text)
-        # 3-2. 3行以上の連続した改行を2行の改行に置換
+        # 3行以上の連続した改行を2行の改行に置換
         text = re.sub(r"\n{3,}", "\n\n", text)
-        # 3-3. 各行の先頭と末尾の空白を削除し、空行が複数続かないようにする
+        # 各行の先頭と末尾の空白を削除し、空行が複数続かないようにする
         lines = [line.strip() for line in text.splitlines()]
         cleaned_text = "\n".join(line for line in lines if line)
 

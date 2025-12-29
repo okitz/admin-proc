@@ -27,6 +27,12 @@ def get_llm(temperature: float = 0.0, model_name: str = "") -> BaseChatModel:
 def get_search_tool(k: int = 5, include_domains: list[str] | None = None) -> RunnableLambda | TavilySearch:
     """環境変数に基づいて検索ツールを返す"""
     use_google = os.getenv("USE_GOOGLE_SEARCH", "false").lower() == "true"
+
+    # Google検索が有効でもキーがない場合はTavilyにフォールバック
+    if use_google and (not os.getenv("GOOGLE_SEARCH_API_KEY") or not os.getenv("CUSTOM_SEARCH_ENGINE_ID")):
+        print("Warning: Google Search API keys missing. Falling back to Tavily.")
+        use_google = False
+
     if use_google:
         wrapper = GoogleSearchAPIWrapper()
 

@@ -1,8 +1,8 @@
 # LLM Models
-MODEL_FAST = "gemini-2.5-flash"
-MODEL_HIGH_QUALITY = "gemini-2.5-pro"
-# MODEL_FAST = "gemini-2.5-flash-lite"
-# MODEL_HIGH_QUALITY = "gemini-2.5-flash"
+# MODEL_FAST = "gemini-2.5-flash"
+# MODEL_HIGH_QUALITY = "gemini-2.5-pro"
+MODEL_FAST = "gemini-2.5-flash-lite"
+MODEL_HIGH_QUALITY = "gemini-2.5-flash"
 
 # Search
 DEFAULT_SEARCH_K = 10
@@ -16,7 +16,6 @@ TARGET_CITIES = [
     {"id": "01100", "name": "札幌市", "prefecture": "北海道"},
     {"id": "04100", "name": "仙台市", "prefecture": "宮城県"},
     {"id": "13105", "name": "文京区", "prefecture": "東京都"},
-    {"id": "13112", "name": "世田谷区", "prefecture": "東京都"},
     {"id": "13103", "name": "港区", "prefecture": "東京都"},
     {"id": "13113", "name": "渋谷区", "prefecture": "東京都"},
     {"id": "13121", "name": "足立区", "prefecture": "東京都"},
