@@ -1,0 +1,417 @@
+{
+  "reasoning": "## 1. 全体思考プロセス\n\n入力されたテキスト情報とペルソナ設定に基づき、港区における児童手当認定請求の「アナログ（郵送）申請」と「デジタル（マイナポータル）申請」の2つのプロセスを分析・比較し、アクションの依存関係グラフを構築した。\n\n### 1.1. アナログ添付書類の根拠確認\n\n港区公式サイトのFAQページおよび児童手当の案内ページに、アナログ申請（郵送・窓口）における必要書類リストが明確に記載されていた。\n- **根拠URL:** https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html\n- **該当書類:**\n    1. 児童手当認定請求書\n    2. 本人確認書類（マイナンバーカード等）\n    3. 個人番号確認書類（マイナンバーカード等）\n    4. 請求者名義の普通預金口座のわかるもの（通帳やキャッシュカードの写し）\n    5. 請求者の健康保険証の写し（厚生年金加入者）\n\nペルソナは民間企業の会社員（厚生年金加入）であり、上記リストの全ての書類が必要となる。したがって、これらの書類の入手・作成プロセスをアナログ申請フローに含めた。推測による書類の追加は行っていない。\n\n### 1.2. デジタル省略可能性の判定\n\nデジタル申請（マイナポータル）における添付書類の省略可能性を、マイナンバーカードによる公的個人認証と情報連携の機能に基づいて判定した。\n\n- **本人確認・個人番号確認:** マイナポータルへのログインおよび電子署名をもって完了するため、物理的な書類（マイナンバーカードのコピー）の提出は不要 (`System_Auto_Link_Data`)。\n- **住所証明:** ログイン時に券面情報が連携されるため、住民票の写し等の提出は不要 (`System_Auto_Link_Data`)。\n- **口座情報:** ペルソナは公金受取口座を登録済みである。ぴったりサービスの案内ページに「公金受取口座が登録されていない場合は電子申請ができません」とあり、登録済み口座が利用されることが明確であるため、通帳やキャッシュカードのコピーは不要 (`System_Auto_Link_Data`)。\n- **資格証明（健康保険証）:** ペルソナは健康保険証情報をマイナポータルに連携済みである。これにより、健康保険証のコピーの提出は不要となり、情報連携で代替される (`System_Auto_Link_Data`)。\n\n以上の分析から、デジタル申請ではアナログ申請で必要だった物理的な添付書類が全て不要となり、ユーザーのアクションが大幅に削減されることが確認できた。\n\n### 1.3. 物理的不可避工程の特定\n\nアナログ申請においては、テキストに明記されていなくても物理的に発生が不可避な「暗黙の工程(implicit)」が存在する。これらを特定し、プロセスに組み込んだ。\n\n- **印刷:** ペルソナはプリンターを非所有のため、区のサイトからダウンロードした申請書PDFをコンビニ等で印刷する必要がある (`Physical_Print_From_Digital`)。\n- **複写:** マイナンバーカード、健康保険証、キャッシュカードの原本から、提出用のコピーを作成する必要がある (`Physical_Duplicate_Copy`)。\n- **資材調達:** 郵送のための封筒および切手を購入する必要がある (`Physical_Obtain_Raw_Material`)。\n- **封入・投函:** 記入済申請書と全てのコピーを封筒に入れ、切手を貼り、ポストへ投函する一連の作業 (`Physical_Combine_or_Package`, `Physical_Submit_Via_Mail`)。\n\nこれらの工程は、デジタル申請では発生しない物理的な摩擦（Friction）の主要因である。\n\n### 1.4. ペルソナ整合性\n\n設定されたペルソナは、本手続きにおいて最も標準的でシンプルなケースに該当する。\n- **申請先:** 公務員ではないため、区役所が申請先として正しい。\n- **状況:** 他市区町村からの転入直後で第一子であるため、「新規の認定請求」に該当する。\n- **追加書類:** 児童との別居、離婚協議、3人以上の子を養育している等の特殊な状況にはないため、監護事実の同意書などの追加書類は一切不要である。\n\nしたがって、基本の必要書類のみで手続きが完結するフローとしてグラフを構築した。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a3",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a4",
+      "label": "キャッシュカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a5",
+      "label": "港区HP(児童手当ページ)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a6",
+      "label": "児童手当認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a7",
+      "label": "児童手当認定請求書(用紙)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a8",
+      "label": "記入済 児童手当認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "マイナンバーカードのコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "キャッシュカードのコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "封筒と切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a13",
+      "label": "提出用封筒(封入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a14",
+      "label": "申請完了(郵送)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a15",
+      "label": "審査待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "a16",
+      "label": "手続き完了",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "手続き開始にあたり、本人確認・個人番号確認に必須のマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html",
+      "evidence_text": "(１）１点で確認できるもの：個人番号カード、運転免許証、パスポート、在留カードなど官公署の発行した顔写真付き証明書"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a3",
+      "description": "手続き開始にあたり、加入年金の証明に必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html",
+      "evidence_text": "５　請求者の健康保険証の写しまたは加入年金証明書（厚生年金に加入中の方のみ）"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a4",
+      "description": "手続き開始にあたり、振込口座の証明に必要なキャッシュカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html",
+      "evidence_text": "４　請求者名義の普通預金口座のわかるもの （通帳やキャッシュカードの写し）"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a12",
+      "description": "郵送手続きに必要な封筒・切手を事前に購入する。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a5",
+      "description": "申請書PDFをダウンロードするため、港区のウェブサイトにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kuse/kocho/faq/kodomo/007.html",
+      "evidence_text": "児童手当認定請求書、加入年金証明書、監護事実の同意書、監護相当・生計費の負担についての確認書は関連リンクのページからダウンロードできます。"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a6",
+      "description": "港区のウェブサイトから申請書のPDFファイルをダウンロードする。",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "児童手当認定請求書（PDF：321KB）"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a7",
+      "description": "ダウンロードした申請書PDFをコンビニのネットプリント等を利用して印刷する。",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a8",
+      "description": "印刷した申請書に必要事項を記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a9",
+      "description": "コンビニのマルチコピー機等でマイナンバーカードの写しを作成する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "郵送の場合は写しを提出"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a10",
+      "description": "コンビニのマルチコピー機等で健康保険証の写しを作成する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "請求者の加入している健康保険の資格情報がわかるもの（健康保険証の写し、資格確認書の写し、資格情報のお知らせの写し等）"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a11",
+      "description": "コンビニのマルチコピー機等でキャッシュカードの写しを作成する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "請求者名義の普通預金口座のわかるもの（通帳やキャッシュカードの写し）"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a13",
+      "description": "記入済の申請書を提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a13",
+      "description": "マイナンバーカードのコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a13",
+      "description": "健康保険証のコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a13",
+      "description": "キャッシュカードのコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a13",
+      "description": "切手を貼った封筒に全ての書類が封入されたことを確認する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "完成した申請書類一式を郵便ポストに投函する。",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "港区役所子ども若者支援課子ども給付係に郵送"
+    },
+    {
+      "source_id": "a14",
+      "target_id": "a15",
+      "description": "区役所に書類が到着し、審査が完了するのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "郵送で申請した場合は、港区役所に書類が到着した日を申請日として取り扱います。"
+    },
+    {
+      "source_id": "a15",
+      "target_id": "a16",
+      "description": "審査完了後、認定通知書が郵送で届き、手続きが完了する。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "「令和7年度児童手当現況届」が認定された方に、令和7年9月30日付けで「児童手当　認定通知書」をお送りしました。"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d3",
+      "label": "スマートフォン",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d4",
+      "label": "ぴったりサービス(港区児童手当)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d5",
+      "label": "マイナポータル(ログイン画面)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d6",
+      "label": "マイナポータル(認証後)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d7",
+      "label": "本人確認情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "住所情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "健康保険証情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d10",
+      "label": "公金受取口座情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d11",
+      "label": "補足情報(入力済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d12",
+      "label": "申請完了(データ送信済)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d13",
+      "label": "審査待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "d14",
+      "label": "手続き完了",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "手続き開始にあたり、電子署名に必須のマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi23vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt",
+      "evidence_text": "申し訳ありませんが、マイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンをお持ちでない場合は電子申請ができません。"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d3",
+      "description": "手続き開始にあたり、マイナンバーカードの読み取りに必要なスマートフォンを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "電子申請にはマイナンバーカード及びマイナンバーカードに対応するICカードリーダまたはマイナンバーカード対応のスマートフォンやタブレットが必要になります。"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d4",
+      "description": "ぴったりサービスにアクセスし、児童手当の電子申請ページを開く。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.minato.tokyo.jp/kodomokyufu/kodomo/kodomo/jidoteate.html",
+      "evidence_text": "マイナポータルによる電子申請（外部サイトへリンク）"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d5",
+      "description": "「申請する」ボタンを押し、マイナポータルでのログイン・認証プロセスを開始する。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi23vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt",
+      "evidence_text": "ログインが必要な手続が選択されています。申請を行う際は、以下のボタンよりログイン後に申請を継続してください。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d6",
+      "description": "スマートフォンでマイナンバーカードを読み取り、マイナポータルにログインする。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi23vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt",
+      "evidence_text": "マイナポータルアプリは、 ログインの手順画面 を確認し、インストールしてください。"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d7",
+      "description": "マイナンバーカードの券面情報から、本人確認情報が自動連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d8",
+      "description": "マイナンバーカードの券面情報から、住民票情報(氏名・住所・生年月日・性別・個人番号)が自動連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d9",
+      "description": "マイナポータルに連携済の健康保険証情報が自動連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "ペルソナの設定（標準モデル）- 属性: ... マイナ連携済"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d10",
+      "description": "マイナポータルに登録済の公金受取口座情報が自動連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi23vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt",
+      "evidence_text": "公金受取口座が登録されていない場合は電子申請ができません。"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d11",
+      "description": "自動入力された情報以外に、職業など必要な情報をフォームに入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdAmf3AsYLzmAT4On4HzAzTQu/7E+4Dvk+4P6m+ahK7wDterVysBGlzLC3MRo6b4MC2+2IEL/zt5sIaeVvwELAYq4sVo++ycztLQZRNHbpmhq4UJjbHOYQYMgT09Ggvi22vhEtuOYbrQVaCV9NvWyv32mxcRccZfkclwNwDb6bgk7utPr+jFF4E9Y478q5mISW4SLLd110iucyxCdejvpnJhOO6utZ/ibpKC1aYNOgFt",
+      "evidence_text": "画面下の「申請する」ボタンを押していただき、フォーム入力のあと..."
+    },
+    {
+      "source_id": "d11",
+      "target_id": "d12",
+      "description": "入力した情報及び連携された情報に基づき、電子署名を付与して申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d12",
+      "target_id": "d13",
+      "description": "申請データが区役所に到着し、審査が完了するのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d13",
+      "target_id": "d14",
+      "description": "審査完了後、認定通知が届き、手続きが完了する。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ]
+}

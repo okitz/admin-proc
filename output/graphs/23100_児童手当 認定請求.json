@@ -1,0 +1,386 @@
+{
+  "reasoning": "## 手続き構造の分析と判断根拠\n\n### 1. アナログ添付書類の根拠確認\n名古屋市公式ウェブサイト（https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html）に、転入者向けの児童手当認定請求における「申請の際に必要となるもの」として、以下の書類が明記されていることを確認した。\n- **請求者名義の口座の通帳のコピーまたはキャッシュカードのコピー**\n- **請求者の健康保険被保険者証（健康保険証）のコピー**（ペルソナは0歳児を養育しているため必須）\n- **請求者の身元確認書類（運転免許証、個人番号カードなど）**\nこれらの書類はアナログ申請（郵送）のフローに含める。郵送の場合、身元確認書類もコピーの同封が一般的であるため、そのように解釈した。\n\n### 2. デジタル省略可能性の判定\nデジタル申請（マイナポータル経由を想定）における添付書類の省略可能性を以下のように判定した。\n\n- **本人確認:** マイナンバーカードによる公的個人認証（ログイン・電子署名）をもって本人確認が完了するため、身元確認書類（免許証等）の画像アップロードは不要（`No_Action`化）。\n- **住所証明:** マイナンバーカードから読み取られる券面情報と、マイナンバー制度による情報連携（公簿確認）により、住民票の提出は不要（`System_Auto_Link_Data`）。\n- **所得証明:** マイナンバー制度による情報連携により、前住所地のものも含め所得課税情報が連携されるため、所得証明書の提出は不要（`System_Auto_Link_Data`）。\n- **口座情報:** ペルソナは公金受取口座を登録済みであるため、マイナポータル経由で口座情報が自動連携される。これにより、通帳やキャッシュカードのコピーのアップロードは不要（`System_Auto_Link_Data`）。\n- **資格証明（健康保険証）:** ペルソナは0歳児を養育しており、被用者保険に加入していることの確認のため、健康保険証の提出は必要である。これは現状、マイナンバーカードに完全には統合されておらず、他自治体のデジタル申請事例（提供された北名古屋市の例）でも画像アップロードを求めているため、省略不可と判断。\n\n**特記事項:** 名古屋市の電子申請ページ（Graffer）には「公金受取口座を利用されたい方」はオンライン申請不可との記載がある。これはマイナポータルの標準機能と矛盾する。本分析の目的である「アナログとデジタルの摩擦比較」を達成するため、ここでは国の標準的なシステムであるマイナポータル（ぴったりサービス）を利用した場合のフローを構築した。この場合、公金受取口座は利用可能であると解釈した。\n\n### 3. 物理的不可避工程の特定\n入力テキストに明記されていないが、物理的に発生が不可避な \"implicit\" なアクションを特定し、フローに含めた。\n- **アナログ申請:**\n    - `Physical_Print_From_Digital`: ダウンロードしたPDFの印刷。ペルソナはプリンタ非所有のためコンビニ等を想定。\n    - `Physical_Duplicate_Copy`: 健康保険証、通帳、身元確認書類のコピー作成。\n    - `Physical_Obtain_Raw_Material`: 郵送のための封筒・切手の購入。\n    - `Physical_Combine_or_Package`: 記入済申請書と複数のコピーを封筒に封入する作業。\n    - `Physical_Submit_Via_Mail`: 封筒をポストへ投函するための移動と行為。\n\n### 4. ペルソナ整合性\n設定されたペルソナ（名古屋市への転入者、第一子0歳、会社員、公金受取口座登録済）に基づき、フローを最適化した。\n- 転入者であるが、マイナンバー連携により前住所地の所得証明書は不要と判断。\n- 0歳児を養育しているため、アナログ・デジタル共に「健康保険証」の提出は必須工程とした。\n- 会社員（組合管掌健康保険）であり、公務員共済ではないため、職場での手続きは発生しない。\n- 公金受取口座登録済という設定は、デジタル申請における口座情報連携（`System_Auto_Link_Data`）の根拠とした。\n- 上記の条件において、特別な追加書類や免除条件はテキスト上見当たらなかった。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "名古屋市HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a3",
+      "label": "児童手当認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a4",
+      "label": "児童手当認定請求書(用紙)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "記入済 児童手当認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a7",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "預金通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "預金通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "マイナンバーカードのコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "封筒・切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a13",
+      "label": "郵送準備済 封筒",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a14",
+      "label": "申請完了(郵送)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a15",
+      "label": "認定通知受領",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "自宅PC/スマホで名古屋市の公式ウェブサイトにアクセスし、手続き情報を確認する。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "出生または名古屋市へ転入される方\n出生届、転入届を提出された後に、お住まいの区の区役所民生子ども課（または支所区民福祉課）の窓口で児童手当の申請を行ってください。申請は、郵送やオンラインによる方法も可能です。"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a3",
+      "description": "名古屋市ウェブサイトから児童手当認定請求書のPDFファイルをダウンロードする。",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "児童手当認定請求書 （PDF 165.2 KB）\n児童手当の認定請求書（申請）の様式です。"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a4",
+      "description": "ダウンロードした申請書PDFをコンビニのプリントサービスなどを利用して印刷する。",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a5",
+      "description": "印刷した請求書に、申請者、配偶者、児童の情報、口座情報、マイナンバーなどを記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "その「児童手当認定請求書」に必要事項をご記入いただき、区役所民生子ども課（または支所区民福祉課）の窓口にご提出していただくか、郵送により申請してください。"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a6",
+      "description": "手続き開始時点で、申請に必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "請求者の健康保険被保険者証（健康保険証）のコピー（注1）\n（注1）3歳未満の子どもを養育している方のみ必要となります。"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a7",
+      "description": "コンビニのコピー機等で健康保険証のコピーを取る。その際、保険者番号および被保険者記号・番号が見えないようにマスキングする。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "健康保険被保険者証のコピーを提出する際には、必ず被保険者等の記号・番号が写らないように隠してコピーを取ってください。"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a8",
+      "description": "手続き開始時点で、振込先指定口座の預金通帳を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "請求者名義の口座の通帳のコピーまたはキャッシュカードのコピー。"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a9",
+      "description": "コンビニのコピー機等で預金通帳のコピーを取る。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "請求者名義の口座の通帳のコピーまたはキャッシュカードのコピー。これらがない口座の場合は口座情報がわかる画面を印刷したもの（公金受取口座の利用を希望する場合は不要です）"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a10",
+      "description": "手続き開始時点で、本人確認書類としてマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "請求者の身元確認書類（運転免許証、個人番号カード（マイナンバーカード）など）"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a11",
+      "description": "コンビニのコピー機等でマイナンバーカードのコピーを取る。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a12",
+      "description": "郵送に必要な封筒と切手を購入・準備する。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a13",
+      "description": "記入済の請求書と、添付書類（健康保険証コピー、通帳コピー、本人確認書類コピー）をすべて封筒に入れ、切手を貼り、封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送で提出される場合はお住まいの区の区役所民生子ども課（または支所区民福祉課）に児童手当認定請求書と必要書類を送付してください。"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a13",
+      "description": "記入済の請求書と、添付書類（健康保険証コピー、通帳コピー、本人確認書類コピー）をすべて封筒に入れ、切手を貼り、封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送で提出される場合はお住まいの区の区役所民生子ども課（または支所区民福祉課）に児童手当認定請求書と必要書類を送付してください。"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a13",
+      "description": "記入済の請求書と、添付書類（健康保険証コピー、通帳コピー、本人確認書類コピー）をすべて封筒に入れ、切手を貼り、封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送で提出される場合はお住まいの区の区役所民生子ども課（または支所区民福祉課）に児童手当認定請求書と必要書類を送付してください。"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a13",
+      "description": "記入済の請求書と、添付書類（健康保険証コピー、通帳コピー、本人確認書類コピー）をすべて封筒に入れ、切手を貼り、封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送で提出される場合はお住まいの区の区役所民生子ども課（または支所区民福祉課）に児童手当認定請求書と必要書類を送付してください。"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a13",
+      "description": "記入済の請求書と、添付書類（健康保険証コピー、通帳コピー、本人確認書類コピー）をすべて封筒に入れ、切手を貼り、封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送で提出される場合はお住まいの区の区役所民生子ども課（または支所区民福祉課）に児童手当認定請求書と必要書類を送付してください。"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "準備した封筒を郵便ポストに投函する。",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "郵送の場合は区役所（または支所）に届いた日が受付日となります。"
+    },
+    {
+      "source_id": "a14",
+      "target_id": "a15",
+      "description": "申請が受理され、審査が行われた後、認定通知書が自宅に届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "申請のあった月の翌月分から手当が支給されますので、お早めにお手続きください。"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "マイナポータル",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d3",
+      "label": "ログイン・認証後画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d4",
+      "label": "連携された住民票情報",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d5",
+      "label": "連携された所得情報",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d6",
+      "label": "連携された公金受取口座情報",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "申請フォーム入力データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d9",
+      "label": "健康保険証の撮影画像",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d10",
+      "label": "アップロード済 健康保険証画像",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d11",
+      "label": "申請完了(オンライン)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d12",
+      "label": "認定通知受領",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "自宅PC/スマホでマイナポータル（ぴったりサービス）にアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://ttzk.graffer.jp/city-nagoya/proc-search/procedures/cf358264-5cbf-4a03-91ef-cdd53b247d45",
+      "evidence_text": "オンラインで手続きを行う\nこの手続きはオンラインで行うことができます。"
+    },
+    {
+      "source_id": "d2",
+      "target_id": "d3",
+      "description": "マイナンバーカードとパスワードを使い、マイナポータルにログイン・電子署名を行う。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK",
+      "evidence_text": "電子申請で手続きを行う場合\n・請求者のマイナンバーカード"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d4",
+      "description": "マイナンバーカードの情報から、申請者の氏名・住所・生年月日・性別・マイナンバーが自動入力(連携)される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "（注）公簿等（マイナンバー制度による情報連携を含みます。）によって市町村長（特別区の区長を含みます。）が確認することができるときは省略することができる場合がございます"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d5",
+      "description": "マイナンバー制度の情報連携により、所得情報が自動的に連携され、所得証明書の提出が不要になる。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "マイナンバーの申告がない場合、申請時だけでなく、世帯状況の確認が必要となった際（現況届等）に、別途、所得証明書の提出が必要となる場合があります。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d6",
+      "description": "事前に登録した公金受取口座の情報が自動的に連携され、口座情報の入力や通帳コピーの提出が不要になる。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "公金受取口座の利用を希望する場合は不要です"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d7",
+      "description": "自動入力以外の必要項目（配偶者の情報、児童の情報など）をウェブフォームに入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d8",
+      "description": "手続き開始時点で、申請に必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK",
+      "evidence_text": "請求者の健康保険被保険者証の画像ファイル（スキャンまたは撮影したもの）\n※厚生年金等に加入している場合のみ"
+    },
+    {
+      "source_id": "d8",
+      "target_id": "d9",
+      "description": "スマートフォンのカメラで健康保険証を撮影し、画像データを作成する。",
+      "type": "Digital_Photograph_Document",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK",
+      "evidence_text": "請求者の健康保険被保険者証の画像ファイル（スキャンまたは撮影したもの）"
+    },
+    {
+      "source_id": "d9",
+      "target_id": "d10",
+      "description": "撮影した健康保険証の画像データを申請画面からアップロードする。",
+      "type": "Digital_Upload_File",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kLp58TzXiznky4A0hNwFeqTfkwrDTA3/tYEwoqI5ITkp5daCCfudDybov0yF07KysJF3gVOSNVeg5n5VznnUp5c9ZgBu5OoEoCZNhbAvF6LKknDh/bhlAWn9Y9ToE6DdLinvr7xzsOB1tlM+o8pYcXs62pS0o5hkcv2NAbMBS10MHjOA6ZvdfbQ6jAbFF+IZ2NLMyjD1AQs/KGhyiD9HVkTfc0Eqj4RKPfKY+HJBuvgRW6TscqB6/L5R8oTxKfxK",
+      "evidence_text": "請求者の健康保険被保険者証の画像ファイル（スキャンまたは撮影したもの）"
+    },
+    {
+      "source_id": "d7",
+      "target_id": "d11",
+      "description": "全ての入力情報と添付ファイルを確認し、マイナンバーカードで電子署名を付与して申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d10",
+      "target_id": "d11",
+      "description": "全ての入力情報と添付ファイルを確認し、マイナンバーカードで電子署名を付与して申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d11",
+      "target_id": "d12",
+      "description": "申請が受理され、審査が行われた後、認定通知書が自宅に届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.nagoya.jp/kodomo/ninshin/1008971/1008973.html",
+      "evidence_text": "申請のあった月の翌月分から手当が支給されますので、お早めにお手続きください。"
+    }
+  ]
+}

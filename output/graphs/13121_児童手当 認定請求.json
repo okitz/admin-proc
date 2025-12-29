@@ -1,0 +1,399 @@
+{
+  "reasoning": "### 1. 全体思考プロセス\n本分析は、足立区の児童手当認定請求手続きについて、ペルソナに基づきアナログ（郵送）申請とデジタル（ぴったりサービス）申請のプロセスを比較・構造化するものである。郵送手続きは足立区公式サイト、デジタル手続きはぴったりサービスの記述を主たる根拠とした。両者のフローを比較し、特に添付書類の要否とそれに伴う物理的アクションの差を明確にすることに焦点を当てた。\n\n### 2. アナログ添付書類の根拠確認\n足立区公式サイトの「申請に必要なもの」セクションには、新規申請時の必要書類として「児童手当・子ども医療費助成制度認定請求書」「申請者（保護者）名義 普通預金通帳」「本人確認書類」が明記されている。また、ぴったりサービスのページには「請求者（受給資格者）の健康保険証の写し又は厚生年金加入証明書」が「別途原本の提出が必要」と記載されている。足立区サイトではマイナンバー連携により健康保険証が原則不要とあるが、これはデジタル申請を念頭に置いた記述であり、アナログ申請では自己添付が必要と解釈するのが妥当である。したがって、アナログ申請では「認定請求書」「普通預金通帳のコピー」「本人確認書類のコピー」「健康保険証のコピー」の4点が必要と判断し、グラフに含めた。\n\n### 3. デジタル省略可能性の判定\nデジタル申請では、マイナンバーカードを用いた公的個人認証と情報連携により、アナログ申請で必要だった書類の多くが省略可能（No_Action化）となる。\n- **本人確認:** マイナンバーカードによる電子署名が、本人確認書類の提出に代わる。\n- **資格証明（健康保険証）:** 足立区サイトに「マイナンバー制度による情報連携により提出が不要になりました」と明記されており、ペルソナは民間企業会社員であるため、情報連携により省略可能と判断した。\n- **口座情報:** ペルソナは公金受取口座を登録済みであり、ぴったりサービスの案内にも口座登録が電子申請の前提条件とされているため、ユーザーが入力・複写することなく自動連携されると判断した。\n- **住所証明（住民票）:** 申請者の現住所はマイナンバーカード情報から連携されるため、住民票の提出は不要である。\n\n### 4. 物理的不可避工程の特定\nアナログ申請においては、テキストに明記されていなくても物理的に発生が不可避な「暗黙の工程」を特定し、グラフに含めた。\n- **印刷:** ペルソナはプリンターを非所有のため、区HPからダウンロードした申請書PDFをコンビニ等で印刷する工程（Physical_Print_From_Digital）が必要となる。\n- **コピー:** 健康保険証、本人確認書類、預金通帳の3点について、それぞれコンビニ等でコピーを作成する工程（Physical_Duplicate_Copy）が必要となる。\n- **梱包・郵送:** 記入済申請書とコピーした添付書類一式を封筒に入れ（Physical_Combine_or_Package）、宛名を書いて切手を貼り（Physical_Write_or_Process）、ポストへ投函する（Physical_Submit_Via_Mail）一連の工程は、郵送申請に必須の物理的アクションである。\n\n### 5. ペルソナ整合性\n設定されたペルソナ（民間企業会社員、転入直後、第一子と同居）に基づき、手続き要件を確認した。\n- 「民間企業会社員」であるため、健康保険証の情報を（アナログではコピー、デジタルでは情報連携で）提出する必要がある。公務員ではないため、職場での申請は該当しない。\n- 「他市区町村から転入」した状況は、新規の認定請求に該当する。\n- 「第一子と同居」しているため、「別居監護申立書」は不要である。\n以上の点から、ペルソナの属性が手続き内容に与える影響を分析に反映した。特別な追加書類や免除条件は発生しない。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "足立区HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a3",
+      "label": "認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a4",
+      "label": "印刷した認定請求書用紙",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "本人確認書類(免許証等)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "本人確認書類のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a7",
+      "label": "健康保険証",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "普通預金通帳",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "普通預金通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "記入済 認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "封筒",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a13",
+      "label": "切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a14",
+      "label": "提出用封筒(宛名記入・切手貼付済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a15",
+      "label": "封入済 提出物一式",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a16",
+      "label": "郵送提出完了",
+      "type": "Process_State"
+    },
+    {
+      "id": "a17",
+      "label": "審査待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "a18",
+      "label": "申請完了・認定通知受領",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "足立区のウェブサイトにアクセスし、手続き情報を確認する",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "申請書・届出書は下記リンクからダウンロードしてご利用ください。"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a3",
+      "description": "ウェブサイトから申請書のPDFファイルをダウンロードする",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "認定請求書（PDF：680KB）"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a4",
+      "description": "ダウンロードしたPDFをコンビニのプリントサービス等を利用して紙に印刷する",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "プリンターは非所有（印刷時はコンビニ利用）。"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a5",
+      "description": "手続き開始時点で、本人確認書類（運転免許証など）を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a6",
+      "description": "コンビニのコピー機等で本人確認書類の写しを作成する",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "本人確認書類 １点で確認できるもの：運転免許証、マイナンバーカード、顔写真付きの身分証明書等"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a7",
+      "description": "手続き開始時点で、健康保険証を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a8",
+      "description": "コンビニのコピー機等で健康保険証の写しを作成する",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "請求者（受給資格者）の健康保険証の写し又は厚生年金加入証明書 別途原本の提出が必要"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a9",
+      "description": "手続き開始時点で、振込先口座の普通預金通帳を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a10",
+      "description": "コンビニのコピー機等で通帳の表紙と見開き1ページ目の写しを作成する",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "郵送でご申請いただく場合は「表紙と見開き1ページ目のコピー」を送付してください。"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a11",
+      "description": "印刷した申請書用紙に、ボールペン等で必要事項を記入する",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "窓口にお越しになる場合は窓口でご記入いただけます。"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a12",
+      "description": "手続き開始時点で、郵送用の封筒を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a13",
+      "description": "手続き開始時点で、郵送用の切手を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a14",
+      "description": "封筒に宛先を記入し、切手を貼り付けて郵送可能な状態にする",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "送付先 郵便番号120-8510 足立区中央本町一丁目17番1号 足立区役所 福祉部 親子支援課 児童手当係"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "記入済の申請書と、各種添付書類のコピーをすべて用意する",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a15",
+      "description": "記入済申請書と添付書類一式を、準備した封筒に入れる",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "郵送手続きのススメ 窓口混雑緩和のため、郵送手続きを推奨しております。"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a15",
+      "description": "本人確認書類のコピーを同封する",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a15",
+      "description": "健康保険証のコピーを同封する",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a15",
+      "description": "普通預金通帳のコピーを同封する",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a14",
+      "target_id": "a15",
+      "description": "宛名記入・切手貼付済の封筒を用意する",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a15",
+      "target_id": "a16",
+      "description": "完成した提出物一式を郵便ポストに投函する",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "郵送での申請の場合、申請書が児童手当係に届いた日を申請日として扱います。"
+    },
+    {
+      "source_id": "a16",
+      "target_id": "a17",
+      "description": "郵送物が区役所に到着し、受理されるまでの待機時間",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "郵便の遅れ・未到着等の責任は負いかねます。"
+    },
+    {
+      "source_id": "a17",
+      "target_id": "a18",
+      "description": "区役所での審査が完了し、認定通知が届くまでの待機時間",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "認定通知書…資格が認定された場合に発行（初回のみ）"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "ぴったりサービス",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d3",
+      "label": "マイナポータル ログイン画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d4",
+      "label": "マイナポータル 申請画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d5",
+      "label": "申請者情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d6",
+      "label": "公金受取口座情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "健康保険情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "申請情報入力データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "申請完了",
+      "type": "Process_State"
+    },
+    {
+      "id": "d10",
+      "label": "マイナンバーカード",
+      "type": "Physical_Processed_Artifact"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d10",
+      "description": "手続き開始時点で、マイナンバーカードを所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "ぴったりサービスにアクセスし、手続きを検索する",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "本サイトにて電子申請を行う他、画面下の「申請する」ボタンを押していただき、フォーム入力のあと、入力済みの申請書を印刷・出力等し、ご郵送ください。"
+    },
+    {
+      "source_id": "d2",
+      "target_id": "d3",
+      "description": "申請ボタンを押し、マイナポータルでのログインを要求される",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d4",
+      "description": "マイナンバーカードを読み取り、パスワードを入力してログイン認証を行う",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "マイナポータルアプリは、ログインの手順画面 を確認し、インストールしてください。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d5",
+      "description": "マイナンバーカードの情報から、申請者の氏名・住所・マイナンバー等が自動入力される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "マイナンバー制度による情報連携により提出が不要になりました。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d6",
+      "description": "マイナポータルに登録済みの公金受取口座情報が自動連携される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "公金受取口座が登録されていない場合は電子申請ができません。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d7",
+      "description": "マイナンバーカードの情報から、健康保険の加入状況が自動連携される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.adachi.tokyo.jp/oyako/k-kyoiku/kosodate/teate-jidoteate.html",
+      "evidence_text": "健康保険証などの厚生年金保険加入証明書類...原則、下記の提出が不要となりました。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d8",
+      "description": "自動入力以外の必要項目（子の情報など）をフォームに入力する",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "フォーム入力のあと、入力済みの申請書を印刷・出力等し、ご郵送ください。"
+    },
+    {
+      "source_id": "d8",
+      "target_id": "d9",
+      "description": "入力内容を確認後、マイナンバーカードで電子署名を行い、申請データを送信する",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1OdZ//ui/3Xr7Riwwb+do3k9jpYTWRXFcS1jGKdkAatBBagmF4BQ5KsLr4jLNmfkEaTqvZbaDp0beeX5QVTpnql80nxfpboDcD8RmItx8WsoR+VGC3vJGYtiq8GC4eyzaQ3l8gzB8gt4FpLsMWqkx0SfqouXLOvqA/tGqgEZJYepvsSIgInOlrg5BQXeio6HdCJBFk8u264C2y7vhY4RHusjJrolFrN9gWV6cylxzGHxF",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    }
+  ]
+}

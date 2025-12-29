@@ -1,0 +1,242 @@
+{
+  "reasoning": "# 児童手当 認定請求（福岡市）のプロセス分析\n\n## 1. アナログ添付書類の根拠確認\n入力テキストによると、アナログ（窓口）申請時の持参物は以下の通り。\n- **請求者および配偶者の「マイナンバーカード」**\n- **請求者名義の金融機関口座の通帳（後日持参可）**\n- **請求者の「身元確認書類（マイナンバーカード、運転免許証、健康保険証など）」**\n\n重要な点として、福岡市のウェブサイトには「福岡市で認定請求を行う場合、所得証明書、児童の住民票、健康保険証（国家公務員共済、地方公務員等共済は除く）の提出は不要です（福岡市が公簿等（マイナンバー制度による情報連携を含む）により、確認します）」と明記されている。これにより、アナログ申請であっても、マイナンバーカードを提示することで多くの添付書類が省略されることが確認できる。\nまた、申請書の様式については「認定請求書の様式は各区役所子育て支援課にあります」との記述があり、ウェブサイトからのダウンロードは示唆されていない。さらに、ぴったりサービスのページには「郵送での認定請求の受付は、原則行っておりませんのでご了承ください」とあるため、アナログ申請は「窓口へ訪問し、そこで申請書を入手・記入・提出する」フローが基本となる。\n\n## 2. デジタル省略可能性の判定\nデジタル申請（マイナポータル）では、以下の情報が情報連携により省略可能（No_Action化）と判断できる。\n- **本人確認:** マイナンバーカードによる電子署名をもって完了するため、物理的な書類は不要。\n- **資格証明（健康保険証）:** ペルソナは民間企業会社員であり、提出が求められる特定の共済組合員ではないため、そもそも提出不要。\n- **口座情報:** ペルソナは公金受取口座を登録済み。ぴったりサービスのページに「公金受取口座を振込口座として希望する場合は、通帳またはキャッシュカードのコピーは不要です」と明記されており、No_Action化が可能。\n- **住所・家族構成証明（住民票）:** アナログ申請と同様、情報連携により提出不要と明記されている。\n- **所得証明:** アナログ申請と同様、情報連携により提出不要と明記されている。\n\nこれらのことから、デジタル申請ではユーザーが能動的に準備・提出する添付書類は一切なく、フォーム入力と電子署名のみで完結することがわかる。\n\n## 3. 物理的不可避工程の特定\n- **アナログ申請:**\n  - **移動:** 郵送申請が不可であるため、「区役所窓口への往復移動」が物理的に不可避である。\n  - **用紙の入手と記入:** 申請書は窓口で配布されるため、「窓口での申請書入手」と「その場での記入」が発生する。\n- **デジタル申請:**\n  - 物理的な移動や印刷、郵送作業は一切発生しない。スマートフォンとマイナンバーカードの操作のみで完結する。\n\n## 4. ペルソナ整合性\n設定されたペルソナ（民間企業会社員、転入直後、第一子、マイナ連携・公金受取口座登録済み）は、本手続きにおける最も標準的なケースに該当する。離婚協議中や児童との別居などの特殊条件に該当しないため、追加の申立書等は一切不要である。特に「公金受取口座登録済み」という設定が、デジタル申請における「通帳コピーのアップロード」というアクションを不要にしており、デジタル化のメリットを最大限に享受できるパターンとなっている。アナログ申請においても、マイナンバーカードを持参することで添付書類が大幅に削減されるため、ペルソナの保有リソースは手続き要件と整合している。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a3",
+      "label": "請求者名義の通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a4",
+      "label": "認定請求書(未記入)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "認定請求書(記入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "申請提出(窓口)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a7",
+      "label": "手続き完了",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "手続き開始にあたり、本人確認・番号確認書類として必須となるマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "請求者および配偶者の「マイナンバーカード」"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a3",
+      "description": "手続き開始にあたり、児童手当の振込先として指定する金融機関の通帳を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "請求者名義の金融機関口座の通帳（後日持参可）"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a4",
+      "description": "区役所の窓口へ移動し、児童手当の認定請求書を入手する。郵送での請求は原則受け付けられていないため、窓口訪問が必須となる。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "認定請求書の様式は各区役所子育て支援課にあります。"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a5",
+      "description": "入手した認定請求書に、申請者情報、児童情報、口座情報などの必要事項を記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a6",
+      "description": "記入済の認定請求書を、本人確認書類（マイナンバーカード）と口座情報（通帳）を提示の上、窓口に提出する。",
+      "type": "Physical_Submit_To_Window",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "請求は お住まいの区の窓口 または 電子申請 にて行ってください。"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a7",
+      "description": "申請後、自治体による審査と認定通知書の発行・送付を待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "福岡市では、支払通知は支給日ごとに送付しておりません。金額の決定は原則年一回、6月の現況届更新後、最初の支払日前（毎年10月1日頃）にお送りします。"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d3",
+      "label": "スマートフォン",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d4",
+      "label": "マイナポータル",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d5",
+      "label": "マイナポータル(ログイン済)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d6",
+      "label": "申請フォーム入力データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "本人確認情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "公金受取口座情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "所得証明情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d10",
+      "label": "住民票情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d11",
+      "label": "申請完了(オンライン)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d12",
+      "label": "手続き完了",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "手続き開始にあたり、電子署名に必須となるマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.fukuoka.lg.jp/kodomo-mirai/k-katei/child/jidouteatedennshishinsei.html",
+      "evidence_text": "マイナンバーカードと対応スマートフォンをお持ちの方 は、児童手当の各種申請をオンラインで提出できます。"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d3",
+      "description": "手続き開始にあたり、マイナポータルへのアクセスおよびマイナンバーカードの読み取りに使用するスマートフォンを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.fukuoka.lg.jp/kodomo-mirai/k-katei/child/jidouteatedennshishinsei.html",
+      "evidence_text": "マイナンバーカードと対応スマートフォンをお持ちの方 は、児童手当の各種申請をオンラインで提出できます。"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d4",
+      "description": "スマートフォンを使い、デジタル庁が運営するマイナポータルにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "福岡市での児童手当の手続き（一部）をデジタル庁のマイナポータルを利用して電子申請で行うことができます。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d5",
+      "description": "マイナポータルで手続きを開始するため、スマートフォンでマイナンバーカードを読み取り、署名用電子証明書のパスワードを入力してログイン認証を行う。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://www.city.fukuoka.lg.jp/kodomo-mirai/k-katei/child/jidouteatedennshishinsei.html",
+      "evidence_text": "マイナンバーカードの署名用電子証明書が有効な状態であり、かつ署名用電子証明書の暗証番号（６から１６桁の英数字※４桁ではありません）が分かることが必要です。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d6",
+      "description": "画面の指示に従い、申請者情報、児童情報など、フォームに必要事項を入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d7",
+      "description": "マイナポータルへのログインおよび電子署名に用いる電子証明書によって、申請者の本人確認が完了する。物理的な本人確認書類の提示は不要となる。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?IihrBz0LrXKC6GiSCtXkTgJjvTLlDoT6z2hUCM+CtzYVSSkKdktOj25+Pk35EB/xq4gnhbPBnBNP9Zz7yY+A2AOXhfzAbkGpVh08jP6NQwgnIHcAgBsQttmJzEeN+gcuiCIGPXOLsAY17mzWkeaAJA==",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d8",
+      "description": "ペルソナは公金受取口座を登録済みのため、マイナポータル上で口座を選択するだけでよく、通帳のコピーなどをアップロードする必要はない。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?IihrBz0LrXKC6GiSCtXkTgJjvTLlDoT6z2hUCM+CtzYVSSkKdktOj25+Pk35EB/xq4gnhbPBnBNP9Zz7yY+A2AOXhfzAbkGpVh08jP6NQwgnIHcAgBsQttmJzEeN+gcuiCIGPXOLsAY17mzWkeaAJA==",
+      "evidence_text": "公金受取口座を振込口座として希望する場合は、通帳またはキャッシュカードのコピーは不要です。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d9",
+      "description": "マイナンバー制度による情報連携により、所得情報が自動的に参照されるため、所得証明書の提出は不要である。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "福岡市で認定請求を行う場合、所得証明書...の提出は不要です（福岡市が公簿等（マイナンバー制度による 情報連携 を含む）により、確認します）"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d10",
+      "description": "マイナンバー制度による情報連携により、児童を含む世帯の住民票情報が自動的に参照されるため、住民票の写しの提出は不要である。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://kodomo.city.fukuoka.lg.jp/info/2038",
+      "evidence_text": "福岡市で認定請求を行う場合、...児童の住民票...の提出は不要です（福岡市が公簿等（マイナンバー制度による 情報連携 を含む）により、確認します）"
+    },
+    {
+      "source_id": "d6",
+      "target_id": "d11",
+      "description": "全ての入力内容と自動連携された情報を確認した後、最終的な意思確認として再度マイナンバーカードによる電子署名を行い、申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?IihrBz0LrXKC6GiSCtXkTgJjvTLlDoT6z2hUCM+CtzYVSSkKdktOj25+Pk35EB/xq4gnhbPBnBNP9Zz7yY+A2AOXhfzAbkGpVh08jP6NQwgnIHcAgBsQttmJzEeN+gcuiCIGPXOLsAY17mzWkeaAJA==",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d11",
+      "target_id": "d12",
+      "description": "申請後、自治体による審査と認定通知書の発行・送付を待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+{
+  "reasoning": "### 1. アナログ添付書類の根拠確認\n入力テキスト（札幌市子育てサイト）には、アナログ申請（認定請求）における添付書類として「請求者の健康保険の加入状況が確認できるもの」と「請求者の銀行の口座番号が確認できるもの」が明記されている。ペルソナは3歳未満の児童を養育する会社員であるため、健康保険証の写しが必要となる。また、振込先指定のために口座情報のわかるもの（通帳の写し等）も必要である。一方で、「マイナンバーの情報連携により、平成29年度以降の所得証明書及び住民票の提出は原則不要となりました」との記述もあり、これらの書類は不要と判断した。\n\n### 2. デジタル省略可能性の判定\n- **本人確認・住所証明:** マイナポータルでの電子署名（公的個人認証）と情報連携により、本人確認書類および住民票の提出は不要（No_Action化）であると判断した。これは札幌市サイトの「住民票の提出は原則不要」という記述と一致する。\n- **資格証明（健康保険）:** ペルソナは3歳未満の子を持つため、健康保険の加入状況の確認が必要である。ぴったりサービスの記述「請求者の健康保険被保険者証の写し（対象者のみ）...画像添付による提出ができます」に基づき、これは省略されず、物理的な健康保険証をスマートフォンで撮影し、画像をアップロードする工程が必要であると判断した。\n- **口座情報:** ペルソナはマイナポータルに公金受取口座を登録済みである。札幌市サイトに「マイナポータルに登録された公金受取口座を児童手当の振込先として登録できます」と明記されているため、口座情報の入力や通帳の写しのアップロードは不要で、システムが自動連携（No_Action化）すると判断した。\n\n### 3. 物理的不可避工程の特定\n- **アナログ申請:** ペルソナはプリンターを所有していないため、札幌市サイトからダウンロードした申請書PDFをコンビニ等で印刷する工程（`Physical_Print_From_Digital`）は不可避である。同様に、添付書類（健康保険証、通帳）のコピー作成（`Physical_Duplicate_Copy`）も必要となる。郵送申請を選択した場合、封筒・切手の入手（`Physical_Obtain_Raw_Material`）、書類の封入（`Physical_Combine_or_Package`）、ポストへの投函（`Physical_Submit_Via_Mail`）といった一連の物理的作業が暗黙的に（implicit）発生する。\n- **デジタル申請:** 物理的な健康保険証を電子データ化するために、スマートフォン等で撮影する工程（`Digital_Photograph_Document`）が不可避である。\n\n### 4. ペルソナ整合性\n設定されたペルソナ（会社員、転入直後、第一子）は、児童手当の新規認定請求の典型的な対象者である。公務員ではないため勤務先ではなく市区町村へ申請する。離婚協議中、海外在住、未成年後見人等の特殊な状況には該当しないため、追加の申立書等は不要と判断した。3歳未満の児童がいるため、健康保険証の確認は必須となる。また、マイナンバーカードと公金受取口座を登録済みという設定が、デジタル申請における情報連携の活用（フリクション削減）の分析を可能にしている。以上の点から、ペルソナ設定と分析フローに矛盾はない。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a3",
+      "label": "預金通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a4",
+      "label": "札幌市HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a5",
+      "label": "認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a6",
+      "label": "未記入の認定請求書",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a7",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "預金通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "記入済の認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "封筒と切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a11",
+      "label": "提出用封筒(封入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "郵送申請完了",
+      "type": "Process_State"
+    },
+    {
+      "id": "a13",
+      "label": "審査・認定待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "a14",
+      "label": "認定通知",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "手続き開始時点で、申請に必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a3",
+      "description": "手続き開始時点で、振込先口座情報がわかる預金通帳を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a4",
+      "description": "札幌市のウェブサイトにアクセスし、児童手当認定請求書の様式を探す。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "認定請求書(PDFファイル:508.5KB)"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a5",
+      "description": "札幌市のウェブサイトから認定請求書のPDFファイルをダウンロードする。",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "認定請求書(PDFファイル:508.5KB)"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a6",
+      "description": "ダウンロードしたPDFファイルを、コンビニのプリントサービス等を利用して紙に印刷する。",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "ペルソナ設定：プリンターは非所有（印刷時はコンビニ利用）。"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a7",
+      "description": "コンビニのコピー機等を利用して、健康保険証の写しを作成する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "令和６年12月１日時点で発行されている健康保険証の写し"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a8",
+      "description": "コンビニのコピー機等を利用して、振込先口座がわかる通帳のページの写しを作成する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "請求者の銀行の口座番号が確認できるものなど"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a9",
+      "description": "印刷した認定請求書に、必要事項をボールペン等で記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "「認定請求書」の提出が必要です。"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a10",
+      "description": "郵送のために、文具店やコンビニで封筒と切手を購入・入手する。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "郵送によるお手続きを希望される方は..."
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a11",
+      "description": "記入済の認定請求書と添付書類一式を、郵送用の封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a11",
+      "description": "健康保険証のコピーを、郵送用の封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a11",
+      "description": "預金通帳のコピーを、郵送用の封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a11",
+      "description": "封筒に切手を貼り、宛名を書いて封をする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a12",
+      "description": "完成した提出用封筒を、郵便ポストに投函する。",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "郵送によるお手続きも可能です。"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a13",
+      "description": "区役所に申請書類が到着し、審査が開始されるのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "審査が完了し、認定通知が自宅に届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "マイナンバーカード",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d3",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "d4",
+      "label": "マイナポータル",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d5",
+      "label": "マイナポータル(ログイン済)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d6",
+      "label": "申請者情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "公金受取口座情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "申請情報入力データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "健康保険証の撮影画像",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d10",
+      "label": "健康保険証画像(アップロード済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d11",
+      "label": "オンライン申請完了",
+      "type": "Process_State"
+    },
+    {
+      "id": "d12",
+      "label": "審査・認定待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "d13",
+      "label": "認定通知",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "手続き開始時点で、電子署名に必要なマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d3",
+      "description": "手続き開始時点で、画像アップロードに必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d1",
+      "target_id": "d4",
+      "description": "スマートフォンやPCからマイナポータルにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://kurashi.yahoo.co.jp/procedure/details/101002?cityId=01100",
+      "evidence_text": "政府が運営しているマイナポータルで手続きの申請ができます。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d5",
+      "description": "マイナンバーカードを読み取り、パスワードを入力してログインする。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?WsJjiNS3qXifsbvQgdKQfieOWPg3ZA9Q5vp8Gow0vSWlzxuhdgz65y4o+5h+mfk3EPE7tdaEhAIjh5VS1/NGsksK41+ZLrRIjMh9FXMh6nMFZIUfE6W+hGqZun26DHz+gYoKfy0xyUbsE3WdxLv5OLAiM4SC47+rsk9z9sxswDHxxJExaoFNJhIU0TNgQQAUJ8/rOwnQIN1MEWOaYW4YIVPtud/1jQnPEm27gzlv0GnbRWTYYKvfxQcne43/JSSd",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d6",
+      "description": "マイナンバーカードの情報連携により、申請者の氏名・住所・マイナンバー等の情報が自動的に入力される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "マイナンバーの情報連携により、平成29年度以降の所得証明書及び住民票の提出は原則不要となりました。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d7",
+      "description": "事前に登録済みの公金受取口座の情報が、振込先として自動的に連携・設定される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://kosodate.city.sapporo.jp/mokuteki/money/kodomo/1124.html",
+      "evidence_text": "マイナポータルに登録された公金受取口座を児童手当の振込先として登録できます。"
+    },
+    {
+      "source_id": "d5",
+      "target_id": "d8",
+      "description": "児童の情報など、自動連携以外の必要事項をフォームに入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d9",
+      "description": "スマートフォンのカメラで健康保険証を撮影し、画像データを作成する。",
+      "type": "Digital_Photograph_Document",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?WsJjiNS3qXifsbvQgdKQfieOWPg3ZA9Q5vp8Gow0vSWlzxuhdgz65y4o+5h+mfk3EPE7tdaEhAIjh5VS1/NGsksK41+ZLrRIjMh9FXMh6nMFZIUfE6W+hGqZun26DHz+gYoKfy0xyUbsE3WdxLv5OLAiM4SC47+rsk9z9sxswDHxxJExaoFNJhIU0TNgQQAUJ8/rOwnQIN1MEWOaYW4YIVPtud/1jQnPEm27gzlv0GnbRWTYYKvfxQcne43/JSSd",
+      "evidence_text": "請求者の健康保険被保険者証の写し（対象者のみ）...画像添付による提出ができます"
+    },
+    {
+      "source_id": "d9",
+      "target_id": "d10",
+      "description": "撮影した健康保険証の画像データを、申請フォームにアップロードする。",
+      "type": "Digital_Upload_File",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?WsJjiNS3qXifsbvQgdKQfieOWPg3ZA9Q5vp8Gow0vSWlzxuhdgz65y4o+5h+mfk3EPE7tdaEhAIjh5VS1/NGsksK41+ZLrRIjMh9FXMh6nMFZIUfE6W+hGqZun26DHz+gYoKfy0xyUbsE3WdxLv5OLAiM4SC47+rsk9z9sxswDHxxJExaoFNJhIU0TNgQQAUJ8/rOwnQIN1MEWOaYW4YIVPtud/1jQnPEm27gzlv0GnbRWTYYKvfxQcne43/JSSd",
+      "evidence_text": "画像添付による提出ができます"
+    },
+    {
+      "source_id": "d8",
+      "target_id": "d11",
+      "description": "入力情報と添付ファイルを確認し、マイナンバーカードで電子署名を行い、申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?WsJjiNS3qXifsbvQgdKQfieOWPg3ZA9Q5vp8Gow0vSWlzxuhdgz65y4o+5h+mfk3EPE7tdaEhAIjh5VS1/NGsksK41+ZLrRIjMh9FXMh6nMFZIUfE6W+hGqZun26DHz+gYoKfy0xyUbsE3WdxLv5OLAiM4SC47+rsk9z9sxswDHxxJExaoFNJhIU0TNgQQAUJ8/rOwnQIN1MEWOaYW4YIVPtud/1jQnPEm27gzlv0GnbRWTYYKvfxQcne43/JSSd",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d10",
+      "target_id": "d11",
+      "description": "アップロードした健康保険証の画像データを、申請データの一部として送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d11",
+      "target_id": "d12",
+      "description": "申請が完了し、審査が開始されるのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d12",
+      "target_id": "d13",
+      "description": "審査が完了し、認定通知が届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ]
+}

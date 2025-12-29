@@ -1,0 +1,339 @@
+{
+  "reasoning": "### 1. 全体思考プロセス\n\n本分析は、広島市における児童手当の新規認定請求手続きを、設定されたペルソナに基づき、アナログ（郵送）とデジタル（マイナポータル）の2つの経路でモデル化する。目的は、各プロセスにおけるアクションの依存関係を明らかにし、両者の摩擦（手間）を比較することである。\n\n- **アナログ申請:** 広島市のウェブサイトに申請様式のPDFが提供されており、郵送での提出も可能であるため、ペルソナの移動負担が最も少ない「PDFダウンロード→自宅等で記入→コンビニで添付書類コピー→郵送」というフローを標準モデルとして採用した。\n- **デジタル申請:** 広島市がマイナポータル（ぴったりサービス）による電子申請に対応していることから、スマートフォンを用いたオンライン手続きをモデル化した。ペルソナがマイナンバーカードと公金受取口座を登録済みである点を活かし、情報連携による添付書類の省略をプロセスに反映させた。\n\n### 2. 思考プロセスの詳細検証\n\n#### 2.1. アナログ添付書類の根拠確認\n\n入力テキスト中の「児童手当申請様式」ページ（`https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html`）に、「お手続きに必要な書類等」として明確なリストが記載されている。\n本分析では、このリストに基づき、以下の書類をアナログ申請における必須の物理的成果物（Physical_Processed_Artifact）として定義した。\n\n1.  **認定請求書（記入済）**\n2.  **通帳のコピー**\n3.  **請求者の健康保険証のコピー**\n4.  **請求者・配偶者のマイナンバーカードのコピー**\n\n常識的な推測は行わず、上記テキストに明記された書類のみを対象とした。\n\n#### 2.2. デジタル省略可能性の判定\n\nデジタル申請において、マイナンバーカードの公的個人認証と情報連携機能により、アナログ申請で必要だった書類の提出が省略可能（`System_Auto_Link_Data`化）になると判断した。\n\n- **本人確認:** マイナンバーカードによる電子署名をもって、本人確認書類（マイナンバーカードのコピー等）の提出は不要となる。\n- **資格証明（健康保険証）:** ペルソナはマイナ連携済みであり、マイナンバーカードの健康保険証利用登録情報を連携させることで、健康保険証のコピー提出は不要となる。\n- **口座情報:** ペルソナは公金受取口座を登録済みである。ぴったりサービスの仕様（他市事例の記載「公金受取口座が登録されていない場合は電子申請ができません」より）から、登録済み口座情報が自動連携されるため、通帳のコピー提出は不要となる。\n- **住所証明:** ぴったりサービスでは、ログイン時のカード情報から住民票情報を連携するため、別途住民票の提出は不要である。\n\n#### 2.3. 物理的不可避工程の特定\n\nアナログ申請フローには、ウェブサイト上のテキストに明記されていなくても、物理的に必ず発生する「暗黙の（implicitな）工程」が存在する。本分析では、ペルソナの状況（プリンター非所有）を考慮し、以下の工程を不可避なアクションとしてグラフに組み込んだ。\n\n-   申請書PDFのコンビニ等での**印刷** (`Physical_Print_From_Digital`)\n-   健康保険証、マイナンバーカード、通帳の**コピー** (`Physical_Duplicate_Copy`)\n-   作成・収集した書類一式の**封入** (`Physical_Combine_or_Package`)\n-   完成した封筒のポストへの**投函** (`Physical_Submit_Via_Mail`)\n\nこれらの工程は、アナログ手続きにおける時間的・金銭的コストの主要因となる。\n\n#### 2.4. ペルソナ整合性\n\n設定されたペルソナは「他市区町村から転入し、第一子と同居する会社員」であり、児童手当の認定請求において最も標準的なケースである。離婚協議中、単身赴任、海外留学、公務員といった特殊な条件には該当しないため、別居監護申立書などの追加書類は不要と判断した。したがって、本分析で構築したフローは、このペルソナにとっての最短・最適な手順を反映している。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "広島市HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a3",
+      "label": "認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a4",
+      "label": "印刷された認定請求書(未記入)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "記入済 認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a7",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "銀行通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "マイナンバーカードのコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "銀行通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "封筒と切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a13",
+      "label": "提出用封筒(封入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a14",
+      "label": "郵送提出(審査待ち)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a15",
+      "label": "認定通知の到着",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a6",
+      "description": "手続き開始時点で、申請に必要な健康保険証を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a7",
+      "description": "手続き開始時点で、本人確認とマイナンバー確認に必要なマイナンバーカードを所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a8",
+      "description": "手続き開始時点で、振込先口座を確認するために必要な銀行通帳を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a12",
+      "description": "手続き開始時点で、郵送に必要な封筒と切手を所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "申請書を入手するため、広島市の公式ウェブサイトにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html",
+      "evidence_text": "児童手当申請様式"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a3",
+      "description": "広島市ウェブサイトから認定請求書のPDFファイルをダウンロードする。",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "認定請求書 （PDF 633.7KB）"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a4",
+      "description": "ダウンロードした認定請求書PDFを、コンビニのプリントサービス等を利用して紙に印刷する。",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "プリンターは非所有（印刷時はコンビニ利用）。"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a5",
+      "description": "印刷した認定請求書に、ボールペン等で必要事項を記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "認定請求書記入例 （PDF 376.8KB）"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a9",
+      "description": "添付書類として、健康保険証のコピーを準備する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "請求者の健康保険情報が確認できるもの（健康保険証のコピー、資格確認書、資格情報のお知らせもしくはマイナ保険証（健康保険証利用登録をしたマイナンバーカード））"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a10",
+      "description": "添付書類として、マイナンバーカードのコピーを準備する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "請求者・配偶者のマイナンバーカード（個人番号カード）（または個人番号の通知カード及び身元確認書類（運転免許証等））"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a11",
+      "description": "添付書類として、銀行通帳のコピーを準備する。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "通帳"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a13",
+      "description": "記入済の認定請求書を提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a13",
+      "description": "健康保険証のコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a13",
+      "description": "マイナンバーカードのコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a13",
+      "description": "銀行通帳のコピーを提出用封筒に入れる。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a13",
+      "description": "準備した封筒と切手を使い、全ての書類を封入し、郵送可能な状態にする。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "完成した申請書類一式を、郵便ポストに投函して市役所に送付する。",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031628.html",
+      "evidence_text": "郵送で提出される場合は、請求書が区の福祉課または出張所(似島出張所を除く。)に到着した日付が受付日となります。"
+    },
+    {
+      "source_id": "a14",
+      "target_id": "a15",
+      "description": "市役所での審査が完了し、認定通知が自宅に届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "マイナポータル",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d3",
+      "label": "マイナポータル(ログイン済)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d4",
+      "label": "申請情報入力データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d5",
+      "label": "申請者情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d6",
+      "label": "口座情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "健康保険証情報(自動連携)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "オンライン申請完了(審査待ち)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d9",
+      "label": "認定通知の到着",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "自宅のスマートフォン等からマイナポータル(ぴったりサービス)にアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://apply.e-tumo.jp/city-hiroshima-u/offer/offerList_detailTop?tempSeq=19506",
+      "evidence_text": "マイナポータル（ぴったりサービス）"
+    },
+    {
+      "source_id": "d2",
+      "target_id": "d3",
+      "description": "マイナンバーカードをスマートフォンで読み取り、パスワードを入力してログインする。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html",
+      "evidence_text": "電子申請に必要なもの マイナンバーカード"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d4",
+      "description": "ログイン後、児童手当認定請求の申請フォームに、児童の情報など必要事項を入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html",
+      "evidence_text": "「申請する」をクリックし、あとは画面に従って必要事項を入力してください。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d5",
+      "description": "マイナンバーカードの情報連携により、申請者の氏名・住所・生年月日・性別・マイナンバーが自動入力される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html",
+      "evidence_text": "マイナンバーカードをお持ちの方は、広島市での児童手当の手続き（一部）を、マイナポータルを利用して電子申請することができます。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d6",
+      "description": "事前に登録済みの公金受取口座情報が自動的に連携され、通帳のコピー提出や口座情報の入力が不要になる。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?0jvmveTGZlWUg0ftErzNFBTto1eaUrq4AvMEo1EUJyoNA7PNfC/bhngdbFciQXeNOxc/9mzR7rcLWEkhbRE7MTaQ1RIqO5HP8OcpcTt4GglyWOTTClscO8Ir/fqT+Pw6HAvLK9L8OgiUXNezE0mdUVLjvV5yoqUcu2TdWP8Zxc4fGZA7zQgXvJG+EGLqsKDKHNKUezl41cQolKb59H6p6vIQlXIcW83ju9dEcK/T6hzNQe9Utqc/wFQF5B2oU8Dl",
+      "evidence_text": "公金受取口座が登録されていない場合は電子申請ができません。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d7",
+      "description": "マイナンバーカードの健康保険証利用登録情報に基づき、加入している健康保険の情報が自動連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "ペルソナは組合管掌健康保険に加入し、マイナ連携済み。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d8",
+      "description": "入力した申請情報と、マイナンバー経由で自動連携された情報の内容を確認し、電子署名を付与して申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://www.city.hiroshima.lg.jp/living/kosodate/1021253/1025912/1031640.html",
+      "evidence_text": "電子認証がエラーになった申請の場合"
+    },
+    {
+      "source_id": "d8",
+      "target_id": "d9",
+      "description": "市役所での審査が完了し、認定通知が自宅に届くのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    }
+  ]
+}

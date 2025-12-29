@@ -1,0 +1,344 @@
+{
+  "reasoning": "### 1. アナログ添付書類の根拠確認\n渋谷区のウェブサイトには「用意するもの」として「（1）児童手当 認定請求書」「（2）請求者名義の口座情報」「（3）請求者の健康保険証などのコピー【該当の健康保険に加入されている人のみ】」が明記されている。\nペルソナは民間企業会社員であり、公務員共済ではないため、（3）健康保険証のコピーは原則不要と判断した。また、所得証明書や住民票も「マイナンバー制度による情報連携」により原則不要と記載がある。\nしたがって、アナログ申請（郵送）で必須となる物理的な提出物は「記入済の認定請求書」と「口座情報がわかるもの（通帳のコピーと解釈）」の2点であると結論付けた。\n\n### 2. デジタル省略可能性の判定\nデジタル申請（ぴったりサービス）における添付書類の省略可能性を以下のように判定した。\n- **本人確認:** マイナンバーカードによる電子署名で代替されるため、物理的な本人確認書類は不要。\n- **住所証明:** マイナンバーカードの情報連携により、住民票の提出は不要。\n- **所得証明:** マイナンバーカードの情報連携により、所得課税証明書の提出は不要。\n- **資格証明（健康保険証）:** ペルソナは民間企業会社員であり、マイナンバー情報連携により被保険者資格情報が確認できるため、健康保険証コピーのアップロードは不要。\n- **口座情報:** ペルソナは公金受取口座を登録済みであり、ぴったりサービスの仕様上、この口座情報が自動連携されるため、通帳コピーのアップロードは不要。\n以上の分析から、デジタル申請ではペルソナの状況において全ての添付書類が情報連携によって省略可能（No_Action化）であると判断した。\n\n### 3. 物理的不可避工程の特定\nアナログ（郵送）申請において、テキストには明記されていないが物理的に不可避な工程を特定し、グラフに含めた。\n- **印刷:** ペルソナはプリンターを非所有のため、区のサイトからダウンロードした申請書PDFをコンビニ等で印刷する工程 (`Physical_Print_From_Digital`)。\n- **コピー:** 提出が必要な「口座情報」のために、銀行通帳等をコンビニ等でコピーする工程 (`Physical_Duplicate_Copy`)。\n- **資材準備と加工:** 郵送に必要な封筒・切手の準備、宛名の記入、切手の貼付 (`Physical_Possess_PreExistent`, `Physical_Write_or_Process`)。\n- **封入・投函:** 作成した書類一式を封筒に入れ (`Physical_Combine_or_Package`)、ポストへ投函する (`Physical_Submit_Via_Mail`)。\nこれらの工程は、郵送手続きを完遂する上で論理的に必須であるため、\"implicit\"な証拠としてグラフに組み込んだ。\n\n### 4. ペルソナ整合性\n設定されたペルソナ（渋谷区へ転入した会社員、第一子と同居、マイナ連携・公金受取口座登録済み）は、本手続きにおいて標準的な申請者像である。\n- 「転入」であるため、新規の「認定請求」に該当する。\n- 「子どもと同居」しているため、「別居監護申立書」は不要。\n- 「会社員（組合健保）」であるため、「公務員」に該当せず、健康保険証コピーの提出義務はない。\n- 「マイナ連携済み」「公金受取口座登録済み」という条件が、デジタル申請における添付書類省略の根拠となり、アナログ手続きとの摩擦（手間）の差を明確化する上で重要な役割を果たしている。\nこのペルソナ設定により、追加の特殊な書類は不要であり、基本的な申請フローを抽出することができた。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "渋谷区HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a3",
+      "label": "児童手当 認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a4",
+      "label": "児童手当 認定請求書(用紙)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "銀行通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "銀行通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a7",
+      "label": "記入済 認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "封筒",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a9",
+      "label": "切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a10",
+      "label": "封筒(宛名記入・切手貼付済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "提出用封筒(書類一式封入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "郵送提出(到着待ち)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a13",
+      "label": "申請完了",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "渋谷区のウェブサイトにアクセスし、手続き情報を確認する",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "児童手当 | 手当 | 渋谷区ポータル"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a3",
+      "description": "ウェブサイトから認定請求書のPDFファイルをダウンロードする",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "（1） 児童手当 認定請求書（PDF 183KB）"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a4",
+      "description": "ダウンロードした申請書PDFをコンビニのプリントサービスで印刷する",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "ペルソナはプリンターを非所有（印刷時はコンビニ利用）"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a7",
+      "description": "印刷した認定請求書に必要事項を記入する",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "児童手当 認定請求書　記入例（PDF 352KB）"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a5",
+      "description": "手続き開始時点で銀行の通帳を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "ペルソナは銀行口座を保有している"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a6",
+      "description": "コンビニのコピー機で銀行通帳の口座情報がわかるページをコピーする",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "（2）請求者名義の口座情報"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a8",
+      "description": "手続き開始時点で郵送用の封筒を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a9",
+      "description": "手続き開始時点で郵送用の切手を所持している",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a10",
+      "description": "封筒に宛先（渋谷区役所子ども青少年課子育て給付係）を記入する",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "〒150-8010（住所不要）渋谷区役所子ども青少年課子育て給付係へ"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a10",
+      "description": "封筒に切手を貼り付ける",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a11",
+      "description": "記入済の認定請求書を封筒に入れる",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a11",
+      "description": "銀行通帳のコピーを封筒に入れる",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a11",
+      "description": "宛名記入・切手貼付済の封筒に、全ての書類を封入する",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a12",
+      "description": "完成した申請書類一式をポストに投函する",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "郵送申請 〒150-8010（住所不要）渋谷区役所子ども青少年課子育て給付係へ"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a13",
+      "description": "区役所に郵送物が到着し、受理されるのを待つ",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "郵送で申請した場合は、渋谷区役所に書類が到着した日を申請日として取り扱います。"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "ぴったりサービス(マイナポータル)",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d3",
+      "label": "ログイン認証後トップ画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d4",
+      "label": "申請情報入力画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d5",
+      "label": "連携データ(本人情報)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d6",
+      "label": "連携データ(所得情報)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "連携データ(公金受取口座)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "連携データ(健康保険情報)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "入力データ(申請情報)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d10",
+      "label": "電子署名画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d11",
+      "label": "電子署名済 申請データ",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d12",
+      "label": "申請完了",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "ぴったりサービス(マイナポータル)のウェブサイトにアクセスする",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/oyakokenko/teate/teate/jite-denshi.html",
+      "evidence_text": "マイナポータル（ぴったりサービス）からの電子申請について"
+    },
+    {
+      "source_id": "d2",
+      "target_id": "d3",
+      "description": "マイナンバーカードをスマートフォンで読み取り、ログイン認証を行う",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S",
+      "evidence_text": "電子申請の際にはマイナンバーカードか、スマホ用署名用電子証明書を設定済みのスマートフォンによる電子署名が必要となります。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d4",
+      "description": "ログインに成功し、申請情報の入力画面に遷移する",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d5",
+      "description": "マイナンバーカードの情報から、本人情報（氏名・住所等）が自動的に連携・入力される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/oyakokenko/teate/teate/jite-denshi.html",
+      "evidence_text": "マイナンバーカードには、以下の情報等が格納されています。所持している方の４情報（氏名、性別、住所、生年月日）"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d6",
+      "description": "マイナポータルの情報連携により、所得情報が自動的に連携される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "請求者と配偶者の所得状況を公簿など（マイナンバー制度による情報連携を含みます。）によって、渋谷区が確認することができないときのみ、請求者と配偶者の「住民税課税（非課税）証明書」の提出が必要になります。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d7",
+      "description": "マイナポータルに登録済みの公金受取口座情報が自動的に連携される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/procdetail/initGet?kc9XUt9I8/CU41afS8P1Oaf64EW3ACzegLmG639cHxfpf/BJ7uJK687Od4cUCenxnWA03xz8G459bYczCqQRt/mx3Fw41FVqE1BOGvBd/ZwfxTMRyi9ICFAc8vAYCDqFEDg/5vWhfD0IUQH3T2r1aZTpnKTLc16biRPD9dF6hzWzm9xDL09cSkqiZmStJ8nevEeHh88cnURiDy1TFKL8hLqBH+Sw1QOUi8Zm1da5gaaJtGvpZanydDuJfuQi7Q9S",
+      "evidence_text": "公金受取口座が登録されていない場合は電子申請ができません。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d8",
+      "description": "マイナポータルの情報連携により、健康保険情報が自動的に連携される",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.shibuya.tokyo.jp/kodomo/kodomo-teate-josei/kodomo-teate/jido_t.html",
+      "evidence_text": "上記に該当されない人であっても、マイナンバー制度による情報連携で年金情報を確認できないときは、提出が必要になる場合があります。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d9",
+      "description": "画面の指示に従い、児童の情報など、自動入力以外の必要情報をフォームに入力する",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/contactInput/initGet?kc9XUt9I8/CU41afS8P1OcUR3iP1XRQSSLCI7IKju30cNy1R51Yjf0cSeX6uRqtK/UZxbVHdpNa6UA7x2ePlqtRqA1rENM0lF+FOuwMq3K01HHA20iI4f3TngRmTTrJ5cVfZllv/d34VzyncTPrZ/XtnQK9j8AAjBb5Uh5LjLIh9q0mqN1-XC4F0sLPqUkGbrWYyD-Xj9zkRh0eMNStUcVa4JVVyWRc23qO4JW6DfmjOtF65BdfAJjcgiyTnjXjp",
+      "evidence_text": "step2 申請情報入力"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d10",
+      "description": "入力内容を確認し、送信ボタンを押下する前に、再度マイナンバーカードを読み取り電子署名を行う",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/contactInput/initGet?kc9XUt9I8/CU41afS8P1OcUR3iP1XRQSSLCI7IKju30cNy1R51Yjf0cSeX6uRqtK/UZxbVHdpNa6UA7x2ePlqtRqA1rENM0lF+FOuwMq3K01HHA20iI4f3TngRmTTrJ5cVfZllv/d34VzyncTPrZ/XtnQK9j8AAjBb5Uh5LjLIh9q0mqN1-XC4F0sLPqUkGbrWYyD-Xj9zkRh0eMNStUcVa4JVVyWRc23qO4JW6DfmjOtF65BdfAJjcgiyTnjXjp",
+      "evidence_text": "step6 電子署名・送信・印刷"
+    },
+    {
+      "source_id": "d9",
+      "target_id": "d11",
+      "description": "手入力した申請情報と電子署名を最終的な申請データに含める",
+      "type": "Digital_Upload_File",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d11",
+      "target_id": "d12",
+      "description": "電子署名済みの申請データを渋谷区役所に送信する",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://app.oss.myna.go.jp/Application/contactInput/initGet?kc9XUt9I8/CU41afS8P1OcUR3iP1XRQSSLCI7IKju30cNy1R51Yjf0cSeX6uRqtK/UZxbVHdpNa6UA7x2ePlqtRqA1rENM0lF+FOuwMq3K01HHA20iI4f3TngRmTTrJ5cVfZllv/d34VzyncTPrZ/XtnQK9j8AAjBb5Uh5LjLIh9q0mqN1-XC4F0sLPqUkGbrWYyD-Xj9zkRh0eMNStUcVa4JVVyWRc23qO4JW6DfmjOtF65BdfAJjcgiyTnjXjp",
+      "evidence_text": "送信する"
+    }
+  ]
+}

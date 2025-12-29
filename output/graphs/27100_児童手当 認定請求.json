@@ -1,0 +1,399 @@
+{
+  "reasoning": "### 1. アナログ添付書類の根拠確認\n入力テキスト「https://www.city.osaka.lg.jp/kodomo/page/0000370608.html」の「持ち物・申請書類・記入例」セクションに、アナログ申請（郵送・窓口）における必要書類が明確にリストアップされている。具体的には「1. 認定請求書」「2. 請求者名義の普通預金口座情報」「3. 請求者の健康保険被保険者証等」「4. 請求者のマイナンバー確認書類」「5. 請求者の本人確認書類」である。ペルソナは3歳未満の第一子を養育しているため、健康保険証の提出は必須である。したがって、これらの書類をすべて物理的に準備するフローを構築した。\n\n### 2. デジタル省略可能性の判定\nデジタル申請においては、マイナンバーカードとマイナポータル連携を前提に、以下のように添付書類の省略（No_Action化）が可能と判断した。\n- **本人確認:** 大阪市行政オンラインシステムへのログイン時にマイナンバーカードによる電子署名（JPKI）を用いるため、別途の本人確認書類は不要となる。\n- **資格証明（健康保険証）:** ペルソナは「マイナ連携済」の健康保険証を所持しているため、マイナポータル経由で資格情報が連携され、物理的なカードのコピー提出は不要となる。\n- **口座情報:** ペルソナは「公金受取口座登録済」であるため、マイナポータル経由で口座情報が自動連携され、通帳のコピー提出は不要となる。\n- **住所・税情報:** テキストに「マイナンバーを利用した情報連携により、担当者が税情報などの情報を確認します」と明記されており、住民票や課税証明書の提出は不要である。\n\n### 3. 物理的不可避工程の特定\nアナログ申請において、テキストに明記されていないが物理的に不可避な「暗黙の（implicit）」工程を特定し、グラフに含めた。\n- **印刷:** ペルソナはプリンターを非所有のため、ダウンロードした申請書PDFをコンビニ等で印刷する工程（Physical_Print_From_Digital）が必須となる。\n- **コピー:** 提出が必要な健康保険証、マイナンバーカード、預金通帳について、原本を郵送することは考えにくいため、それぞれコピーを作成する工程（Physical_Duplicate_Copy）を追加した。\n- **資材準備と郵送作業:** 郵送提出を選択した場合、封筒や切手の準備（Physical_Obtain_Raw_Material）、書類の封入（Physical_Combine_or_Package）、ポストへの投函（Physical_Submit_Via_Mail）は必須の物理アクションである。\n\n### 4. ペルソナ整合性\n設定されたペルソナ（他市町村から転入した会社員、第一子0歳）に基づき、フローを最適化した。\n- **申請種類:** 転入による新規の「認定請求」に該当する。\n- **追加書類:** 「別居監護申立書」や「監護相当・生計費の負担についての確認書」などは、ペルソナの状況（同居、第一子）では不要と判断した。\n- **提出先:** 郵送と窓口が選択可能だが、移動コストの少ない「郵送」を優先するルールに基づき、アナログ申請は郵送フローで構築した。\n- **デジタルリテラシー:** スマートフォンとマイナンバーカードを保有し、パスワードも把握済みであるため、デジタル申請の全ての工程（オンラインシステムへのアクセス、電子署名）を本人で完結できると判断した。",
+  "analog_nodes": [
+    {
+      "id": "a1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a2",
+      "label": "大阪市HP",
+      "type": "Digital_System"
+    },
+    {
+      "id": "a3",
+      "label": "認定請求書PDF",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "a4",
+      "label": "認定請求書(用紙)",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a5",
+      "label": "健康保険証(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a6",
+      "label": "マイナンバーカード(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a7",
+      "label": "預金通帳(原本)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a8",
+      "label": "健康保険証のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a9",
+      "label": "マイナンバーカードのコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a10",
+      "label": "預金通帳のコピー",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a11",
+      "label": "記入済 認定請求書",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a12",
+      "label": "封筒",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a13",
+      "label": "切手",
+      "type": "Physical_Raw_Material"
+    },
+    {
+      "id": "a14",
+      "label": "提出用封筒(封入済)",
+      "type": "Physical_Processed_Artifact"
+    },
+    {
+      "id": "a15",
+      "label": "郵送提出(完了)",
+      "type": "Process_State"
+    },
+    {
+      "id": "a16",
+      "label": "審査待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "a17",
+      "label": "認定・支給開始",
+      "type": "Process_State"
+    }
+  ],
+  "analog_edges": [
+    {
+      "source_id": "a1",
+      "target_id": "a5",
+      "description": "手続きに必要な健康保険証を自宅で所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "持ち物・申請書類・記入例 3．請求者の健康保険被保険者証等"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a6",
+      "description": "手続きに必要なマイナンバーカードを自宅で所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "持ち物・申請書類・記入例 4．請求者のマイナンバー確認書類"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a7",
+      "description": "手続きに必要な銀行口座の通帳を自宅で所持している。",
+      "type": "Physical_Possess_PreExistent",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "持ち物・申請書類・記入例 2．請求者名義の普通預金口座情報（銀行名、支店名、口座番号）の分かるもの"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a2",
+      "description": "申請書を入手するため、大阪市のウェブサイトにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定請求書(PDF形式, 250.02KB)"
+    },
+    {
+      "source_id": "a2",
+      "target_id": "a3",
+      "description": "ウェブサイトから認定請求書のPDFファイルをダウンロードする。",
+      "type": "Digital_Download_File",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定請求書(PDF形式, 250.02KB)"
+    },
+    {
+      "source_id": "a3",
+      "target_id": "a4",
+      "description": "ペルソナはプリンターを所有していないため、コンビニのマルチコピー機で申請書PDFを印刷する。",
+      "type": "Physical_Print_From_Digital",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a4",
+      "target_id": "a11",
+      "description": "印刷した認定請求書に必要事項を記入する。",
+      "type": "Physical_Write_or_Process",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定請求書 （記入例）"
+    },
+    {
+      "source_id": "a5",
+      "target_id": "a8",
+      "description": "郵送提出のため、コンビニ等で健康保険証のコピーを取る。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a6",
+      "target_id": "a9",
+      "description": "郵送提出のため、コンビニ等でマイナンバーカードのコピーを取る。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a7",
+      "target_id": "a10",
+      "description": "郵送提出のため、コンビニ等で預金通帳のコピーを取る。",
+      "type": "Physical_Duplicate_Copy",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a12",
+      "description": "郵送用に封筒と切手を購入または用意する。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a1",
+      "target_id": "a13",
+      "description": "郵送用に切手を購入または用意する。",
+      "type": "Physical_Obtain_Raw_Material",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a11",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "申請ごとに必要なものをお持ちになり、お住まいの区の保健福祉センター児童手当担当窓口までご提出いただくか、送付してください。"
+    },
+    {
+      "source_id": "a8",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a9",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a10",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a12",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a13",
+      "target_id": "a14",
+      "description": "記入済の認定請求書、各種コピー、切手を貼った封筒を準備し、封入する。",
+      "type": "Physical_Combine_or_Package",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "a14",
+      "target_id": "a15",
+      "description": "完成した提出用封筒を郵便ポストに投函する。",
+      "type": "Physical_Submit_Via_Mail",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "送付してください。"
+    },
+    {
+      "source_id": "a15",
+      "target_id": "a16",
+      "description": "区役所に申請書類が到着し、審査が開始されるのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定を受ければ、原則として申請した翌月分の手当から支給されます"
+    },
+    {
+      "source_id": "a16",
+      "target_id": "a17",
+      "description": "審査が完了し、認定通知が届き、手当の支給が開始される。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定を受ければ、原則として申請した翌月分の手当から支給されます"
+    }
+  ],
+  "digital_nodes": [
+    {
+      "id": "d1",
+      "label": "開始(自宅)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d2",
+      "label": "大阪市行政オンラインシステム",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d3",
+      "label": "申請フォーム画面",
+      "type": "Digital_System"
+    },
+    {
+      "id": "d4",
+      "label": "申請情報(入力済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d5",
+      "label": "本人確認情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d6",
+      "label": "公金受取口座情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d7",
+      "label": "健康保険情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d8",
+      "label": "税情報(連携済)",
+      "type": "Digital_Data_Object"
+    },
+    {
+      "id": "d9",
+      "label": "電子申請(完了)",
+      "type": "Process_State"
+    },
+    {
+      "id": "d10",
+      "label": "審査待ち",
+      "type": "Process_State"
+    },
+    {
+      "id": "d11",
+      "label": "認定・支給開始",
+      "type": "Process_State"
+    }
+  ],
+  "digital_edges": [
+    {
+      "source_id": "d1",
+      "target_id": "d2",
+      "description": "手続きを開始するため、大阪市行政オンラインシステムにアクセスする。",
+      "type": "Digital_Access_Website",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "電子申請は大阪市行政オンラインシステムより行うことができます。"
+    },
+    {
+      "source_id": "d2",
+      "target_id": "d3",
+      "description": "スマートフォンでマイナンバーカードを読み取り、システムにログインする。",
+      "type": "Digital_Authenticate_User",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "マイナンバーカード読取対応のスマートフォン又はICカードリーダライタが必要です。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d4",
+      "description": "ログイン後、申請フォーム画面で氏名、住所、子の情報などを入力する。",
+      "type": "Digital_Enter_Text_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d5",
+      "description": "マイナンバーカードの券面情報およびJ-LISとの情報連携により、本人確認が完了する。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "マイナンバーをご提出いただけない場合は、請求者本人および配偶者の方の課税（所得）証明書を窓口へご提出ください。"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d6",
+      "description": "マイナポータルに登録済みの公金受取口座情報が自動で連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d7",
+      "description": "マイナンバーカードに紐づけられた健康保険証情報が自動で連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": null,
+      "evidence_text": "implicit"
+    },
+    {
+      "source_id": "d3",
+      "target_id": "d8",
+      "description": "マイナンバーを利用した情報連携により、所得・課税情報が自動で連携される。",
+      "type": "System_Auto_Link_Data",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "1月1日現在、大阪市にお住まいでなかった場合は、当時お住まいだった市区町村に対してマイナンバーを利用した情報連携により、担当者が税情報などの情報を確認します。"
+    },
+    {
+      "source_id": "d4",
+      "target_id": "d9",
+      "description": "入力情報と連携された情報を全て確認し、電子署名を付与して申請データを送信する。",
+      "type": "Digital_Submit_Data",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "個人番号カード（マイナンバーカード）をお持ちの方は、児童手当の手続きを電子申請で行うことができます。"
+    },
+    {
+      "source_id": "d9",
+      "target_id": "d10",
+      "description": "申請データが区役所に到着し、審査が開始されるのを待つ。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定を受ければ、原則として申請した翌月分の手当から支給されます"
+    },
+    {
+      "source_id": "d10",
+      "target_id": "d11",
+      "description": "審査が完了し、認定通知が届き、手当の支給が開始される。",
+      "type": "Time_Wait_For_Processing",
+      "evidence_url": "https://www.city.osaka.lg.jp/kodomo/page/0000370608.html",
+      "evidence_text": "認定を受ければ、原則として申請した翌月分の手当から支給されます"
+    }
+  ]
+}
