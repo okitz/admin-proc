@@ -1,4 +1,5 @@
 # 大規模言語モデルを用いた行政手続き文書のグラフ構造化とDX効果の定量的評価
+https://github.com/okitz/admin-proc
 
 ## 実行手順
 
